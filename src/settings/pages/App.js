@@ -4,7 +4,7 @@ import { EditModal } from "../components/EditModal";
 
 function App() {
   const [patterns, setPatterns] = useState([]);
-  const [modalTarget, setModalTarget] = useState(null); // null, {mode: "new"}, or {mode: "edit", target: ...}
+  const [modalMode, setModalMode] = useState(null);
   function addPattern(pattern) {
     setPatterns((oldPatterns) => [...oldPatterns, pattern]);
   }
@@ -25,23 +25,23 @@ function App() {
     );
   }
   function closeModal() {
-    setModalTarget(null);
+    setModalMode(null);
   }
   return (
     <>
-      {modalTarget && (
+      {modalMode && (
         <EditModal
           patterns={patterns}
           addPattern={addPattern}
           editPattern={editPattern}
-          target={modalTarget.mode == "edit" ? modalTarget.target : null}
+          target={modalMode.mode == "edit" ? modalMode.target : null}
           closeModal={closeModal}
         />
       )}
       <ProfileManager
         patterns={patterns}
         deletePattern={deletePattern}
-        setModalTarget={setModalTarget}
+        setModalMode={setModalMode}
       />
     </>
   );
