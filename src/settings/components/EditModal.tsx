@@ -1,6 +1,21 @@
-import React, { useEffect, useState } from "react";
+import * as React from "react";
+import { useState, useEffect } from "react";
 
-function EditModal({ patterns, addPattern, editPattern, target, closeModal }) {
+type Pattern = { name: string; url: string };
+
+function EditModal({
+  patterns,
+  addPattern,
+  editPattern,
+  target,
+  closeModal,
+}: {
+  patterns: Pattern[];
+  addPattern: (pattern: Pattern) => void;
+  editPattern: (oldPattern: Pattern, newPattern: Pattern) => void;
+  target: Pattern;
+  closeModal: () => void;
+}) {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   useEffect(() => {
@@ -14,7 +29,7 @@ function EditModal({ patterns, addPattern, editPattern, target, closeModal }) {
     setUrl("");
     closeModal();
   }
-  function validate(newPattern) {
+  function validate(newPattern: Pattern): boolean {
     for (let pattern of patterns) {
       if (newPattern.name === pattern.name) {
         return false;
@@ -22,7 +37,7 @@ function EditModal({ patterns, addPattern, editPattern, target, closeModal }) {
     }
     return true;
   }
-  function handleSubmit(event) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     const newPattern = { name: name, url: url };
     if (validate(newPattern)) {
