@@ -2,7 +2,7 @@
   "name": "liberty-arrow-extension",
   "version": "0.0.0-alpha",
   "description": "Browser extension for blocking websites to improve productivity.",
-  "main": "index.js",
+  "main": "./src/index.tsx",
   "scripts": {
     "dev": "webpack --mode development",
     "prod": "webpack --mode production"

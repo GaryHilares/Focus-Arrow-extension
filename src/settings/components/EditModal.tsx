@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-
-type Pattern = { name: string; url: string };
+import { Pattern } from "./ProfileManager";
 
 function EditModal({
   patterns,

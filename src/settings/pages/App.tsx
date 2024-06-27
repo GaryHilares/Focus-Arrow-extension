@@ -1,13 +1,19 @@
-import React, { useState } from "react";
-import { ProfileManager } from "../components/ProfileManager";
+import * as React from "react";
+import { useState } from "react";
+import { ProfileManager, Pattern } from "../components/ProfileManager";
 import { EditModal } from "../components/EditModal";
 
-function useEditableList() {
+function useEditableList(): [
+  Pattern[],
+  (element: any) => void,
+  (oldElement: any, newElement: any) => void,
+  (oldElement: any) => void
+] {
   const [list, setList] = useState([]);
-  function addElement(element) {
+  function addElement(element: any): void {
     setList((oldList) => [...oldList, element]);
   }
-  function editElement(oldElement, newElement) {
+  function editElement(oldElement: any, newElement: any): void {
     setList((oldList) => {
       const newList = [...oldList];
       newList.splice(
@@ -18,7 +24,7 @@ function useEditableList() {
       return newList;
     });
   }
-  function deleteElement(oldElement) {
+  function deleteElement(oldElement: any): void {
     setList((oldList) => oldList.filter((element) => element !== oldElement));
   }
 

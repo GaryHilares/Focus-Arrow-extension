@@ -1,6 +1,18 @@
-import React from "react";
+import * as React from "react";
 
-function ProfileManager({ patterns, deletePattern, setModalMode }) {
+export type Pattern = { name: string; url: string };
+
+function ProfileManager({
+  patterns,
+  deletePattern,
+  setModalMode,
+}: {
+  patterns: Pattern[];
+  deletePattern: (oldPattern: Pattern) => void;
+  setModalMode: (
+    mode: { mode: "new" } | { mode: "edit"; target: Pattern }
+  ) => void;
+}) {
   return (
     <div>
       <button onClick={() => setModalMode({ mode: "new" })}>Add</button>
