@@ -14,13 +14,25 @@ function EditModal({ patterns, addPattern, editPattern, target, closeModal }) {
     setUrl("");
     closeModal();
   }
-  function handleSubmit() {
-    if (target) {
-      editPattern(target, { name: name, url: url });
-    } else {
-      addPattern({ name: name, url: url });
+  function validate(newPattern) {
+    for (let pattern of patterns) {
+      if (newPattern.name === pattern.name) {
+        return false;
+      }
     }
-    close();
+    return true;
+  }
+  function handleSubmit(event) {
+    event.preventDefault();
+    const newPattern = { name: name, url: url };
+    if (validate(newPattern)) {
+      if (target) {
+        editPattern(target, newPattern);
+      } else {
+        addPattern(newPattern);
+      }
+      close();
+    }
   }
   return (
     <form onSubmit={handleSubmit} onReset={close}>
