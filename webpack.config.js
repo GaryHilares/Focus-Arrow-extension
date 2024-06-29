@@ -3,9 +3,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: "development",
-  entry: "./src/settings/index.tsx",
+  entry: {
+    settings: "./src/settings/index.tsx",
+    background: "./src/background/index.ts",
+  },
   output: {
-    filename: "settings/bundle.js",
+    filename: "[name]/bundle.js",
   },
   module: {
     rules: [
@@ -39,10 +42,6 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        {
-          from: "src/background/",
-          to: "background/",
-        },
         {
           from: "src/popup/",
           to: "popup/",

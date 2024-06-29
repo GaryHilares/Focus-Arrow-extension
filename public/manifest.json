@@ -10,7 +10,7 @@
 		"https://liberty-arrow-backend.vercel.app/*"
 	],
 	"background": {
-		"scripts": ["background/background.js"]
+		"scripts": ["background/bundle.js"]
 	},
 	"action": {
 		"default_title": "Liberty Arrow's settings",
