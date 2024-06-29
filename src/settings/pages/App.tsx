@@ -5,6 +5,31 @@ import { EditModal } from "../components/EditModal";
 
 declare var browser: any;
 
+function useSyncing<Type>(
+  query: string,
+  state: Type,
+  setState: (value: Type) => void,
+  defaultValue: Type
+): boolean {
+  const [loaded, setLoaded] = useState<boolean>(false);
+  useEffect(() => {
+    browser.storage.local.get(query, (queryResult: { [key: string]: Type }) => {
+      setLoaded(true);
+      if (queryResult[query]) {
+        setState(queryResult[query]);
+      } else {
+        setState(defaultValue);
+      }
+    });
+  }, []);
+  useEffect(() => {
+    if (loaded) {
+      browser.storage.local.set({ [query]: state });
+    }
+  }, [state]);
+  return loaded;
+}
+
 function useSyncedPatterns(): [
   boolean,
   Pattern[],
@@ -12,8 +37,8 @@ function useSyncedPatterns(): [
   (oldElement: Pattern, newElement: Pattern) => void,
   (toDelete: Pattern) => void
 ] {
-  const [loaded, setLoaded] = useState(false);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<Pattern[]>([]);
+  const loaded = useSyncing<Pattern[]>("patterns", list, setList, []);
   function addElement(element: Pattern): void {
     setList((oldList) => [...oldList, element]);
   }
@@ -31,24 +56,6 @@ function useSyncedPatterns(): [
   function deleteElement(oldElement: Pattern): void {
     setList((oldList) => oldList.filter((element) => element !== oldElement));
   }
-  useEffect(() => {
-    browser.storage.local.get(
-      "patterns",
-      ({ patterns }: { patterns: Pattern[] }) => {
-        setLoaded(true);
-        if (patterns) {
-          setList(patterns);
-        } else {
-          setList([]);
-        }
-      }
-    );
-  }, []);
-  useEffect(() => {
-    if (loaded) {
-      browser.storage.local.set({ patterns: list });
-    }
-  }, [list]);
   return [loaded, list, addElement, editElement, deleteElement];
 }
 
