@@ -6,6 +6,7 @@ export class StorageManager {
   static saveDefault(): void {
     browser.storage.local.set({
       patterns: [],
+      theme: "default",
     });
   }
   async loadBlockManager(): Promise<BlockManager> {
@@ -14,5 +15,10 @@ export class StorageManager {
       .then((result: { patterns: InStoragePattern[] }) => {
         return new BlockManager(result.patterns);
       });
+  }
+  async loadTheme(): Promise<string> {
+    return browser.storage.local
+      .get("theme")
+      .then((result: { theme: string }) => result.theme);
   }
 }

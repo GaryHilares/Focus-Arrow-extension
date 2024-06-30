@@ -19,8 +19,9 @@ export async function blockPages(
     console.log("services:19");
     console.log(url, shouldUpdate);
     if (shouldUpdate) {
+      const theme = await mgr.loadTheme();
       browser.tabs.update(tabId, {
-        url: "https://liberty-arrow-backend.vercel.app/block-screens/default",
+        url: `https://liberty-arrow-backend.vercel.app/block-screens/${theme}`,
       });
     }
   }
