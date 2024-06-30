@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 declare var browser: any;
 
 export function useSyncing<Type>(
-  query: string,
-  state: Type,
-  setState: (value: Type) => void,
-  defaultValue: Type
-): boolean {
+  query: string
+): [boolean, Type, Dispatch<SetStateAction<Type>>] {
+  const [state, setState] = useState<Type>();
   const [loaded, setLoaded] = useState<boolean>(false);
   useEffect(() => {
     browser.storage.local.get(query, (queryResult: { [key: string]: Type }) => {
@@ -15,7 +14,9 @@ export function useSyncing<Type>(
       if (queryResult[query]) {
         setState(queryResult[query]);
       } else {
-        setState(defaultValue);
+        console.error(
+          `Could not retrieve "${query}" from browser.storage.local.`
+        );
       }
     });
   }, []);
@@ -24,5 +25,5 @@ export function useSyncing<Type>(
       browser.storage.local.set({ [query]: state });
     }
   }, [state]);
-  return loaded;
+  return [loaded, state, setState];
 }

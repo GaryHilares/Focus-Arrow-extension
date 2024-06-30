@@ -1,5 +1,4 @@
 import { useSyncing } from "./useSyncing";
-import { useState } from "react";
 
 type Pattern = { name: string; url: string };
 
@@ -10,8 +9,7 @@ export function useSyncedPatterns(): [
   (oldElement: Pattern, newElement: Pattern) => void,
   (toDelete: Pattern) => void
 ] {
-  const [list, setList] = useState<Pattern[]>([]);
-  const loaded = useSyncing<Pattern[]>("patterns", list, setList, []);
+  const [loaded, list, setList] = useSyncing<Pattern[]>("patterns");
   function addElement(element: Pattern): void {
     setList((oldList) => [...oldList, element]);
   }
