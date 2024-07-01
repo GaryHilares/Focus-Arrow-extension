@@ -7,14 +7,13 @@ export function ProtectionModal({ onSuccess }: { onSuccess: () => void }) {
     return null;
   } else if (protectionType === "none") {
     onSuccess();
-    return null;
   }
 
-  return (
-    <>
-      {protectionType == "button" && (
-        <button onClick={onSuccess}>Log In</button>
-      )}
-    </>
-  );
+  switch (protectionType) {
+    default:
+    case "none":
+      return null;
+    case "button":
+      return <button onClick={onSuccess}>Log In</button>;
+  }
 }
