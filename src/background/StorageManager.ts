@@ -7,6 +7,7 @@ export class StorageManager {
     browser.storage.local.set({
       patterns: [],
       theme: "default",
+      protectionType: "none",
     });
   }
   async loadBlockManager(): Promise<BlockManager> {
