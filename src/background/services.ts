@@ -12,12 +12,9 @@ export async function blockPages(
 ) {
   if (changeInfo.url) {
     const url = changeInfo.url;
-    console.log("services:15");
     const mgr = new StorageManager();
     const blockMgr = await mgr.loadBlockManager();
     const shouldUpdate = blockMgr.checkForMatch(url);
-    console.log("services:19");
-    console.log(url, shouldUpdate);
     if (shouldUpdate) {
       const theme = await mgr.loadTheme();
       browser.tabs.update(tabId, {
