@@ -8,6 +8,7 @@ export class StorageManager {
       patterns: [],
       theme: "default",
       protectionType: "none",
+      protectionDetails: null,
     });
   }
   async loadBlockManager(): Promise<BlockManager> {
