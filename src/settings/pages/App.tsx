@@ -3,13 +3,55 @@ import { useState } from "react";
 import { ProtectionModal } from "../components/ProtectionModal";
 import { EntryEditor } from "../components/EntryEditor";
 import { SettingsEditor } from "../components/SettingsEditor";
+import * as styles from "./App.module.scss";
+
+enum Tab {
+  EntryEditor,
+  SettingsEditor,
+}
+
+function TabMapper({ tab }: { tab: Tab }) {
+  switch (tab) {
+    case Tab.EntryEditor:
+      return <EntryEditor />;
+    case Tab.SettingsEditor:
+      return <SettingsEditor />;
+  }
+}
+
+function TabNavigation({ setTab }: { setTab: (tab: Tab) => void }) {
+  return (
+    <header className={styles.header}>
+      <div className="left-wrapper">
+        <img
+          src="/common/icons/Liberty_Arrow_text-false.png"
+          width="50px"
+          height="50px"
+        />
+        <h1>Liberty Arrow</h1>
+      </div>
+      <nav>
+        <ul>
+          <li>
+            <button onClick={() => setTab(Tab.EntryEditor)}>Entries</button>
+          </li>
+          <li>
+            <button onClick={() => setTab(Tab.SettingsEditor)}>Settings</button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  );
+}
 
 function App() {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [tab, setTab] = useState<Tab>(Tab.EntryEditor);
+
   return loggedIn ? (
     <>
-      <EntryEditor />
-      <SettingsEditor />
+      <TabNavigation setTab={setTab} />
+      <TabMapper tab={tab} />
     </>
   ) : (
     <ProtectionModal onSuccess={() => setLoggedIn(true)} />
