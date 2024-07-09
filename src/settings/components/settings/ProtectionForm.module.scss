@@ -1,0 +1,16 @@
+.label-input-pair {
+  label {
+    font-size: 1rem;
+  }
+
+  select,
+  input {
+    float: right;
+  }
+
+  &::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+}

@@ -1,0 +1,26 @@
+.edit-form {
+  h1 {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+}
+
+.text-entry-wrapper {
+  margin: 0.5rem 0;
+  input {
+    float: right;
+  }
+  &::after {
+    clear: both;
+    display: table;
+    content: "";
+  }
+}
+
+.button-box {
+  text-align: center;
+  input {
+    display: inline-block;
+    margin: 0 0.5rem;
+  }
+}

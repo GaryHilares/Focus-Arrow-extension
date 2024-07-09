@@ -1,15 +1,24 @@
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
 
 module.exports = {
   mode: "development",
-  entry: "./src/settings/index.js",
+  entry: {
+    settings: "./src/settings/index.tsx",
+    background: "./src/background/index.ts",
+  },
   output: {
-    filename: "settings/bundle.js",
+    filename: "[name]/bundle.js",
   },
   module: {
     rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "ts-loader",
+        },
+      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -18,13 +27,17 @@ module.exports = {
         },
       },
       {
+        test: /\.s[ac]ss$/,
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
+      {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
       },
     ],
   },
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".js", ".jsx", ".ts", ".tsx"],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -33,10 +46,6 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        {
-          from: "src/background/",
-          to: "background/",
-        },
         {
           from: "src/popup/",
           to: "popup/",

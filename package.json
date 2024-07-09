@@ -2,7 +2,7 @@
   "name": "liberty-arrow-extension",
   "version": "0.0.0-alpha",
   "description": "Browser extension for blocking websites to improve productivity.",
-  "main": "index.js",
+  "main": "./src/index.tsx",
   "scripts": {
     "dev": "webpack --mode development",
     "prod": "webpack --mode production"
@@ -22,6 +22,8 @@
   },
   "homepage": "https://github.com/GaryHilares/Liberty-Arrow#readme",
   "dependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -33,7 +35,12 @@
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.0",
+    "sass": "^1.77.6",
+    "sass-loader": "^14.2.1",
     "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.5.2",
+    "typescript-plugin-css-modules": "^5.1.0",
     "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4"
   }

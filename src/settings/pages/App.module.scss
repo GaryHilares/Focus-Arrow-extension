@@ -1,0 +1,56 @@
+$background-color: white;
+$primary-color: rgb(84, 90, 167);
+$header-height: 7.5vh;
+
+.header {
+  background-color: $background-color;
+  border-bottom: 3px solid $primary-color;
+  display: block;
+  height: $header-height;
+  div {
+    align-items: center;
+    display: inline-flex;
+    float: left;
+    height: $header-height;
+    img {
+      margin: 0 20px;
+    }
+    h1 {
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+  }
+  nav {
+    align-items: center;
+    display: inline-flex;
+    float: right;
+    height: $header-height;
+    ul {
+      li {
+        display: inline-block;
+        margin: 0 50px;
+        button {
+          background: none;
+          border: none;
+          font-size: 1rem;
+          outline: none;
+          &:focus,
+          &:hover {
+            text-decoration: underline;
+            color: $primary-color;
+          }
+        }
+      }
+    }
+  }
+  &::after {
+    content: "";
+    clear: both;
+    display: block;
+  }
+}
+
+.main-content {
+  margin: 10px auto;
+  width: 50%;
+}
