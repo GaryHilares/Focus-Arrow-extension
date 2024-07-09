@@ -44,7 +44,6 @@ function ProtectionSpecificForm({
       case "password":
         setProtectionDetails({ password: "" });
         break;
-      case "button":
       case "none":
       default:
         break;
@@ -83,7 +82,6 @@ function ProtectionForm() {
             onChange={(e) => setProtectionType(e.target.value)}
           >
             <option value="none">None</option>
-            <option value="button">Button</option>
             <option value="password">Password</option>
           </select>
         </div>
