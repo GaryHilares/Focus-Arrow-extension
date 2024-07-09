@@ -1,7 +1,8 @@
 import * as React from "react";
-import { useState, useEffect, useId } from "react";
+import { useState, useEffect } from "react";
 import { Pattern } from "./Pattern";
 import { Modal } from "../common/Modal";
+import { LabelledTextInput } from "../common/LabelledInputs";
 import * as styles from "./EditModal.module.scss";
 
 interface EditModalProps {
@@ -21,8 +22,6 @@ function EditModal({
 }: EditModalProps) {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
-  const nameId = useId();
-  const urlId = useId();
   useEffect(() => {
     if (target) {
       setName(target.name);
@@ -62,24 +61,8 @@ function EditModal({
         className={styles["edit-form"]}
       >
         <h1>Create entry</h1>
-        <div className={styles["text-entry-wrapper"]}>
-          <label htmlFor={nameId}>Name</label>
-          <input
-            id={nameId}
-            onChange={(e) => setName(e.target.value)}
-            type="text"
-            value={name}
-          />
-        </div>
-        <div className={styles["text-entry-wrapper"]}>
-          <label htmlFor={urlId}>URL</label>
-          <input
-            id={urlId}
-            onChange={(e) => setUrl(e.target.value)}
-            type="text"
-            value={url}
-          />
-        </div>
+        <LabelledTextInput value={name} onChange={setName} label="Name" />
+        <LabelledTextInput value={url} onChange={setUrl} label="URL" />
         <div className={styles["button-box"]}>
           <input type="submit" />
           <input type="reset" />

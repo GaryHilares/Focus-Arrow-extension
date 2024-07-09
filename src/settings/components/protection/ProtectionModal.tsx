@@ -1,14 +1,14 @@
 import * as React from "react";
-import { useEffect, useState, useId } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "../common/Modal";
 import { useAutoInitialLoad } from "../../hooks/useSyncing";
 import * as styles from "./ProtectionModal.module.scss";
+import { LabelledTextInput } from "../common/LabelledInputs";
 
 function PasswordSpecificForm({ onSuccess }: { onSuccess: () => void }) {
   const [loaded, protectionDetails] =
     useAutoInitialLoad<any>("protectionDetails");
   const [password, setPassword] = useState<string>("");
-  const passwordId = useId();
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -22,15 +22,11 @@ function PasswordSpecificForm({ onSuccess }: { onSuccess: () => void }) {
       <Modal>
         <form className={styles["password-form"]} onSubmit={handleSubmit}>
           <h1>Log into Liberty Arrow</h1>
-          <div className={styles["label-input-pair"]}>
-            <label htmlFor={passwordId}>Password</label>
-            <input
-              id={passwordId}
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+          <LabelledTextInput
+            value={password}
+            onChange={setPassword}
+            label="Password"
+          />
           <div className={styles["button-box"]}>
             <input type="submit" />
           </div>

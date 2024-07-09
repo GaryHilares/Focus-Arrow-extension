@@ -1,6 +1,6 @@
 import * as React from "react";
-import * as styles from "./ProfileManager.module.scss";
 import { Pattern } from "./Pattern";
+import * as styles from "./ProfileManager.module.scss";
 
 interface ProfileManagerProps {
   patterns: Pattern[];

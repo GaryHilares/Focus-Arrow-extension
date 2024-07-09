@@ -6,24 +6,6 @@
   }
 }
 
-.label-input-pair {
-  margin: 0.5rem;
-  label {
-    font-size: 1rem;
-  }
-
-  select,
-  input {
-    float: right;
-  }
-
-  &::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-}
-
 .button-box {
   text-align: center;
 }
