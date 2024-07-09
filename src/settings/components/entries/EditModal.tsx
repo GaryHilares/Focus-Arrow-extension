@@ -61,22 +61,29 @@ function EditModal({
         onReset={close}
         className={styles["edit-form"]}
       >
-        <label htmlFor={nameId}>Name</label>
-        <input
-          id={nameId}
-          onChange={(e) => setName(e.target.value)}
-          type="text"
-          value={name}
-        />
-        <label htmlFor={urlId}>URL</label>
-        <input
-          id={urlId}
-          onChange={(e) => setUrl(e.target.value)}
-          type="text"
-          value={url}
-        />
-        <input type="submit" />
-        <input type="reset" />
+        <h1>Create entry</h1>
+        <div className={styles["text-entry-wrapper"]}>
+          <label htmlFor={nameId}>Name</label>
+          <input
+            id={nameId}
+            onChange={(e) => setName(e.target.value)}
+            type="text"
+            value={name}
+          />
+        </div>
+        <div className={styles["text-entry-wrapper"]}>
+          <label htmlFor={urlId}>URL</label>
+          <input
+            id={urlId}
+            onChange={(e) => setUrl(e.target.value)}
+            type="text"
+            value={url}
+          />
+        </div>
+        <div className={styles["button-box"]}>
+          <input type="submit" />
+          <input type="reset" />
+        </div>
       </form>
     </Modal>
   );
