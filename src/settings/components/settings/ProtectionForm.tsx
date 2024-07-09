@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect } from "react";
-import { useSyncing } from "../hooks/useSyncing";
+import { useSyncing } from "../../hooks/useSyncing";
 
 interface PasswordDetails {
   password: string;

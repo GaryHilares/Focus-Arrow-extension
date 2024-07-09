@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import { ProfileManager } from "./ProfileManager";
 import { EditModal } from "./EditModal";
-import { useSyncedPatterns } from "../hooks/useSyncedPaterns";
+import { useSyncedPatterns } from "../../hooks/useSyncedPaterns";
 
 export function EntryEditor() {
   const [modalMode, setModalMode] = useState(null);

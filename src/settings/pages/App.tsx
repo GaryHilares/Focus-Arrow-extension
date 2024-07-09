@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useState } from "react";
-import { ProtectionModal } from "../components/ProtectionModal";
-import { EntryEditor } from "../components/EntryEditor";
-import { SettingsEditor } from "../components/SettingsEditor";
+import { ProtectionModal } from "../components/protection/ProtectionModal";
+import { EntryEditor } from "../components/entries/EntryEditor";
+import { SettingsEditor } from "../components/settings/SettingsEditor";
 import * as styles from "./App.module.scss";
 
 enum Tab {

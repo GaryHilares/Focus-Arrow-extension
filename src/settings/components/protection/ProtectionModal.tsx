@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useAutoInitialLoad } from "../hooks/useSyncing";
+import { Modal } from "../common/Modal";
+import { useAutoInitialLoad } from "../../hooks/useSyncing";
 
 function PasswordSpecificForm({ onSuccess }: { onSuccess: () => void }) {
   const [loaded, protectionDetails] =
@@ -16,14 +17,16 @@ function PasswordSpecificForm({ onSuccess }: { onSuccess: () => void }) {
 
   return (
     loaded && (
-      <form onSubmit={handleSubmit}>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input type="submit" />
-      </form>
+      <Modal>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <input type="submit" />
+        </form>
+      </Modal>
     )
   );
 }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useSyncing } from "../hooks/useSyncing";
+import { useSyncing } from "../../hooks/useSyncing";
 
 export function ThemeForm() {
   const [loaded, theme, setTheme] = useSyncing<string>("theme");

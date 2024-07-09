@@ -1,6 +1,8 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId } from "react";
 import { Pattern } from "./ProfileManager";
+import { Modal } from "../common/Modal";
+import * as styles from "./EditModal.module.scss";
 
 function EditModal({
   patterns,
@@ -17,6 +19,8 @@ function EditModal({
 }) {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
+  const nameId = useId();
+  const urlId = useId();
   useEffect(() => {
     if (target) {
       setName(target.name);
@@ -49,16 +53,30 @@ function EditModal({
     }
   }
   return (
-    <form onSubmit={handleSubmit} onReset={close}>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input type="text" value={url} onChange={(e) => setUrl(e.target.value)} />
-      <input type="submit" />
-      <input type="reset" />
-    </form>
+    <Modal>
+      <form
+        onSubmit={handleSubmit}
+        onReset={close}
+        className={styles["edit-form"]}
+      >
+        <label htmlFor={nameId}>Name</label>
+        <input
+          id={nameId}
+          onChange={(e) => setName(e.target.value)}
+          type="text"
+          value={name}
+        />
+        <label htmlFor={urlId}>URL</label>
+        <input
+          id={urlId}
+          onChange={(e) => setUrl(e.target.value)}
+          type="text"
+          value={url}
+        />
+        <input type="submit" />
+        <input type="reset" />
+      </form>
+    </Modal>
   );
 }
 
