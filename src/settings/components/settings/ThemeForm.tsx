@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useSyncing } from "../../hooks/useSyncing";
 
-export function ThemeForm() {
+function ThemeForm() {
   const [loaded, theme, setTheme] = useSyncing<string>("theme");
 
   if (!loaded) {
@@ -17,3 +17,5 @@ export function ThemeForm() {
     </>
   );
 }
+
+export { ThemeForm };

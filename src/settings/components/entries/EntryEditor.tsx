@@ -4,7 +4,7 @@ import { ProfileManager } from "./ProfileManager";
 import { EditModal } from "./EditModal";
 import { useSyncedPatterns } from "../../hooks/useSyncedPaterns";
 
-export function EntryEditor() {
+function EntryEditor() {
   const [modalMode, setModalMode] = useState(null);
   const [loaded, patterns, addPattern, editPattern, deletePattern] =
     useSyncedPatterns();
@@ -34,3 +34,5 @@ export function EntryEditor() {
     </>
   );
 }
+
+export { EntryEditor };

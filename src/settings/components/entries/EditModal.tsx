@@ -1,8 +1,16 @@
 import * as React from "react";
 import { useState, useEffect, useId } from "react";
-import { Pattern } from "./ProfileManager";
+import { Pattern } from "./Pattern";
 import { Modal } from "../common/Modal";
 import * as styles from "./EditModal.module.scss";
+
+interface EditModalProps {
+  patterns: Pattern[];
+  addPattern: (pattern: Pattern) => void;
+  editPattern: (oldPattern: Pattern, newPattern: Pattern) => void;
+  target: Pattern;
+  closeModal: () => void;
+}
 
 function EditModal({
   patterns,
@@ -10,13 +18,7 @@ function EditModal({
   editPattern,
   target,
   closeModal,
-}: {
-  patterns: Pattern[];
-  addPattern: (pattern: Pattern) => void;
-  editPattern: (oldPattern: Pattern, newPattern: Pattern) => void;
-  target: Pattern;
-  closeModal: () => void;
-}) {
+}: EditModalProps) {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   const nameId = useId();

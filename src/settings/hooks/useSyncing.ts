@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 
 declare var browser: any;
 
-export function useAutoSave<Type>(query: string, state: Type): void {
+function useAutoSave<Type>(query: string, state: Type): void {
   const [firstLoad, setFirstLoad] = useState<boolean>(true);
   useEffect(() => {
     if (!firstLoad) {
@@ -14,7 +14,7 @@ export function useAutoSave<Type>(query: string, state: Type): void {
   }, [state]);
 }
 
-export function useAutoInitialLoad<Type>(
+function useAutoInitialLoad<Type>(
   query: string
 ): [boolean, Type, Dispatch<SetStateAction<Type>>] {
   const [state, setState] = useState<Type>();
@@ -35,10 +35,12 @@ export function useAutoInitialLoad<Type>(
   return [loaded, state, setState];
 }
 
-export function useSyncing<Type>(
+function useSyncing<Type>(
   query: string
 ): [boolean, Type, Dispatch<SetStateAction<Type>>] {
   const [loaded, state, setState] = useAutoInitialLoad<Type>(query);
   useAutoSave(query, state);
   return [loaded, state, setState];
 }
+
+export { useAutoSave, useAutoInitialLoad, useSyncing };

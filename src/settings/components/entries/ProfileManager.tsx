@@ -1,19 +1,20 @@
 import * as React from "react";
 import * as styles from "./ProfileManager.module.scss";
+import { Pattern } from "./Pattern";
 
-export type Pattern = { name: string; url: string };
-
-function ProfileManager({
-  patterns,
-  deletePattern,
-  setModalMode,
-}: {
+interface ProfileManagerProps {
   patterns: Pattern[];
   deletePattern: (oldPattern: Pattern) => void;
   setModalMode: (
     mode: { mode: "new" } | { mode: "edit"; target: Pattern }
   ) => void;
-}) {
+}
+
+function ProfileManager({
+  patterns,
+  deletePattern,
+  setModalMode,
+}: ProfileManagerProps) {
   return (
     <section className={styles.main}>
       <header>

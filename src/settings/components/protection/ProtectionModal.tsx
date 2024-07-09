@@ -31,7 +31,7 @@ function PasswordSpecificForm({ onSuccess }: { onSuccess: () => void }) {
   );
 }
 
-export function ProtectionModal({ onSuccess }: { onSuccess: () => void }) {
+function ProtectionModal({ onSuccess }: { onSuccess: () => void }) {
   const [loaded, protectionType] = useAutoInitialLoad<string>("protectionType");
   useEffect(() => {
     if (protectionType === "none") {
@@ -53,3 +53,5 @@ export function ProtectionModal({ onSuccess }: { onSuccess: () => void }) {
       return null;
   }
 }
+
+export { ProtectionModal };

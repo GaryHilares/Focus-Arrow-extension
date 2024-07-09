@@ -2,7 +2,7 @@ import { useSyncing } from "./useSyncing";
 
 type Pattern = { name: string; url: string };
 
-export function useSyncedPatterns(): [
+function useSyncedPatterns(): [
   boolean,
   Pattern[],
   (toAdd: Pattern) => void,
@@ -29,3 +29,5 @@ export function useSyncedPatterns(): [
   }
   return [loaded, list, addElement, editElement, deleteElement];
 }
+
+export { useSyncedPatterns };

@@ -8,13 +8,12 @@ interface PasswordDetails {
 
 type ProtectionDetails = PasswordDetails | null;
 
-function PasswordSpecificForm({
-  data,
-  setData,
-}: {
+interface PasswordSpecificFormProps {
   data: PasswordDetails;
   setData: (newData: PasswordDetails) => void;
-}) {
+}
+
+function PasswordSpecificForm({ data, setData }: PasswordSpecificFormProps) {
   return (
     <input
       type="text"
@@ -24,11 +23,13 @@ function PasswordSpecificForm({
   );
 }
 
+interface ProtectionSpecificFormProps {
+  protectionType: string;
+}
+
 function ProtectionSpecificForm({
   protectionType,
-}: {
-  protectionType: string;
-}) {
+}: ProtectionSpecificFormProps) {
   const [loaded, protectionDetails, setProtectionDetails] =
     useSyncing<ProtectionDetails>("protectionDetails");
 
@@ -61,7 +62,7 @@ function ProtectionSpecificForm({
   }
 }
 
-export function ProtectionForm() {
+function ProtectionForm() {
   const [loaded, protectionType, setProtectionType] =
     useSyncing<string>("protectionType");
 
@@ -81,3 +82,5 @@ export function ProtectionForm() {
     )
   );
 }
+
+export { ProtectionForm };
