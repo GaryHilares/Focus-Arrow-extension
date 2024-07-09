@@ -4,10 +4,10 @@ import { ThemeForm } from "./ThemeForm";
 
 function SettingsEditor() {
   return (
-    <>
+    <section>
       <ThemeForm />
       <ProtectionForm />
-    </>
+    </section>
   );
 }
 

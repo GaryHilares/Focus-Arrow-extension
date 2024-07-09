@@ -51,7 +51,9 @@ function App() {
   return loggedIn ? (
     <>
       <TabNavigation setTab={setTab} />
-      <TabMapper tab={tab} />
+      <div className={styles["main-content"]}>
+        <TabMapper tab={tab} />
+      </div>
     </>
   ) : (
     <ProtectionModal onSuccess={() => setLoggedIn(true)} />

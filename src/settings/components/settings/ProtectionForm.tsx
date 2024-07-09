@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useId } from "react";
 import { useSyncing } from "../../hooks/useSyncing";
+import * as styles from "./ProtectionForm.module.scss";
 
 interface PasswordDetails {
   password: string;
@@ -14,12 +15,17 @@ interface PasswordSpecificFormProps {
 }
 
 function PasswordSpecificForm({ data, setData }: PasswordSpecificFormProps) {
+  const passwordId = useId();
   return (
-    <input
-      type="text"
-      value={data.password}
-      onChange={(e) => setData({ password: e.target.value })}
-    />
+    <div className={styles["label-input-pair"]}>
+      <label htmlFor={passwordId}>Password</label>
+      <input
+        id={passwordId}
+        type="text"
+        value={data.password}
+        onChange={(e) => setData({ password: e.target.value })}
+      />
+    </div>
   );
 }
 
@@ -65,18 +71,22 @@ function ProtectionSpecificForm({
 function ProtectionForm() {
   const [loaded, protectionType, setProtectionType] =
     useSyncing<string>("protectionType");
+  const protectionTypeId = useId();
 
   return (
     loaded && (
       <>
-        <select
-          value={protectionType}
-          onChange={(e) => setProtectionType(e.target.value)}
-        >
-          <option value="none">None</option>
-          <option value="button">Button</option>
-          <option value="password">Password</option>
-        </select>
+        <div className={styles["label-input-pair"]}>
+          <label htmlFor={protectionTypeId}>Protection type</label>
+          <select
+            value={protectionType}
+            onChange={(e) => setProtectionType(e.target.value)}
+          >
+            <option value="none">None</option>
+            <option value="button">Button</option>
+            <option value="password">Password</option>
+          </select>
+        </div>
         <ProtectionSpecificForm protectionType={protectionType} />
       </>
     )
