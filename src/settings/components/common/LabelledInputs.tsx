@@ -14,6 +14,7 @@ function LabelledTextInput({ value, onChange, label }: LabelledTextInputProps) {
     <div className={styles.wrapper}>
       <label htmlFor={inputId}>{label}</label>
       <input
+        type="text"
         id={inputId}
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -52,4 +53,25 @@ function LabelledSelectInput({
   );
 }
 
-export { LabelledTextInput, LabelledSelectInput };
+interface LabelledTimeInputProps {
+  value: string;
+  onChange: (newValue: string) => void;
+  label: string;
+}
+
+function LabelledTimeInput({ value, onChange, label }: LabelledTimeInputProps) {
+  const inputId = useId();
+  return (
+    <div className={styles.wrapper}>
+      <label htmlFor={inputId}>{label}</label>
+      <input
+        type="time"
+        id={inputId}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </div>
+  );
+}
+
+export { LabelledTextInput, LabelledSelectInput, LabelledTimeInput };
