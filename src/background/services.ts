@@ -2,8 +2,8 @@ import { StorageManager } from "./StorageManager";
 
 declare var browser: any;
 
-function setDefault() {
-  StorageManager.saveDefault();
+function initializeStorage() {
+  StorageManager.initializeStorage();
 }
 
 async function blockPages(
@@ -24,4 +24,4 @@ async function blockPages(
   }
 }
 
-export { setDefault, blockPages };
+export { initializeStorage, blockPages };
