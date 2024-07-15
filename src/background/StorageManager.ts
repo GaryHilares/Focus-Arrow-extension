@@ -31,7 +31,7 @@ export class StorageManager {
           endTime: site.endTime || "23:59",
         })
       );
-      browser.storage.set({
+      browser.storage.local.set({
         patterns: sites,
         theme: result.theme,
         protectionType: result.passwordData.protectionType,
