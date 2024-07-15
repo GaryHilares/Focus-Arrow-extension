@@ -1,6 +1,6 @@
-import { setDefault, blockPages } from "./services";
+import { initializeStorage, blockPages } from "./services";
 
 declare var browser: any;
 
-browser.runtime.onInstalled.addListener(setDefault);
+browser.runtime.onInstalled.addListener(initializeStorage);
 browser.tabs.onUpdated.addListener(blockPages);

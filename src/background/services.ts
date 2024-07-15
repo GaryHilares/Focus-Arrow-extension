@@ -2,11 +2,11 @@ import { StorageManager } from "./StorageManager";
 
 declare var browser: any;
 
-export function setDefault() {
-  StorageManager.saveDefault();
+function initializeStorage() {
+  StorageManager.initializeStorage();
 }
 
-export async function blockPages(
+async function blockPages(
   tabId: number,
   changeInfo: { url?: string; tab: any; [key: string]: any }
 ) {
@@ -23,3 +23,5 @@ export async function blockPages(
     }
   }
 }
+
+export { initializeStorage, blockPages };

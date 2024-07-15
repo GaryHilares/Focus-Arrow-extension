@@ -1,6 +1,11 @@
 import { useSyncing } from "./useSyncing";
 
-type Pattern = { name: string; url: string };
+interface Pattern {
+  name: string;
+  url: string;
+  startTime: string;
+  endTime: string;
+}
 
 function useSyncedPatterns(): [
   boolean,
