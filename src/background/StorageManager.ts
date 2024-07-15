@@ -19,7 +19,7 @@ export class StorageManager {
   static async isMigrating(): Promise<boolean> {
     return browser.storage.local
       .get("v")
-      .then((result: { v?: number }) => result == undefined);
+      .then((result: { v?: number }) => Object.keys(result).length == 0);
   }
   static migrateToNewVersion(): void {
     browser.storage.local.get(null, (result: { [key: string]: any }) => {
@@ -31,13 +31,24 @@ export class StorageManager {
           endTime: site.endTime || "23:59",
         })
       );
-      browser.storage.local.set({
-        patterns: sites,
-        theme: result.theme,
-        protectionType: result.passwordData.protectionType,
-        protectionDetails: result.passwordData.details,
-        v: 0,
-      });
+      const protectionType = result.passwordData.protectionType.toLowerCase();
+      const isProtectionTypeValid =
+        protectionType == "none" || protectionType == "password";
+      browser.storage.local
+        .set({
+          patterns: sites,
+          theme: result.theme,
+          protectionType: isProtectionTypeValid ? protectionType : "none",
+          protectionDetails: isProtectionTypeValid
+            ? result.passwordData.details
+            : null,
+          v: 0,
+          blockedPages: null,
+          passwordData: null,
+        })
+        .then(() =>
+          browser.storage.local.remove(["blockedPages", "passwordData"])
+        );
     });
   }
   async loadBlockManager(): Promise<BlockManager> {
