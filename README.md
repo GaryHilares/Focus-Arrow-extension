@@ -18,7 +18,17 @@ Liberty Arrow is a customizable browser extension for blocking websites and impr
 
 ## Installation and usage
 
-Soon will be added.
+You can get a stable copy of Liberty Arrow from the browser extension store:
+
+- Mozilla Firefox: https://addons.mozilla.org/es/firefox/addon/liberty-arrow/
+
+You can also build Liberty Arrow from source by following these instructions:
+
+1. Install NodeJS and NPM if you have not installed them already. You can find information on how installing them here: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+2. Clone the repository using `git clone https://github.com/GaryHilares/Liberty-Arrow-extension/`.
+3. Open a terminal in the root of the project.
+4. Run `npm install` to install the dependencies from NPM.
+5. Run `npm run dev` to get a development build, or `npm run build` to get a production build. The output will be in the `dist/` directory.
 
 ## Contributors
 
