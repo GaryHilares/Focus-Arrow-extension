@@ -4,13 +4,18 @@ import { useSyncing } from "../../hooks/useSyncing";
 import {
   LabelledTextInput,
   LabelledSelectInput,
+  LabelledButtonInput,
 } from "../common/LabelledInputs";
 
 interface PasswordDetails {
   password: string;
 }
 
-type ProtectionDetails = PasswordDetails | null;
+interface EmailTokenDetails {
+  email: string;
+}
+
+type ProtectionDetails = PasswordDetails | EmailTokenDetails | null;
 
 interface PasswordSpecificFormProps {
   data: PasswordDetails;
@@ -24,6 +29,35 @@ function PasswordSpecificForm({ data, setData }: PasswordSpecificFormProps) {
       onChange={(newValue) => setData({ password: newValue })}
       label="Password"
     />
+  );
+}
+
+interface EmailTokenSpecificFormProps {
+  data: EmailTokenDetails;
+  setData: (newData: EmailTokenDetails) => void;
+}
+
+function EmailTokenSpecificForms({
+  data,
+  setData,
+}: EmailTokenSpecificFormProps) {
+  return (
+    <>
+      <LabelledTextInput
+        value={data.email}
+        onChange={(newValue) => setData({ email: newValue })}
+        label="Password"
+      />
+      <LabelledButtonInput
+        text="Send"
+        onClick={() =>
+          fetch(
+            `https://liberty-arrow-api.vercel.app/email-confirmation?email=${data.email}`
+          )
+        }
+        label="Send verification email"
+      />
+    </>
   );
 }
 
@@ -42,6 +76,9 @@ function ProtectionSpecificForm({
       case "password":
         setProtectionDetails({ password: "" });
         break;
+      case "email-token":
+        setProtectionDetails({ email: "" });
+        break;
       case "none":
       default:
         break;
@@ -53,8 +90,19 @@ function ProtectionSpecificForm({
       return (
         loaded &&
         protectionDetails &&
-        protectionDetails.password !== undefined && (
+        "password" in protectionDetails && (
           <PasswordSpecificForm
+            data={protectionDetails}
+            setData={setProtectionDetails}
+          />
+        )
+      );
+    case "email-token":
+      return (
+        loaded &&
+        protectionDetails &&
+        "email" in protectionDetails && (
+          <EmailTokenSpecificForms
             data={protectionDetails}
             setData={setProtectionDetails}
           />
@@ -79,6 +127,7 @@ function ProtectionForm() {
           options={[
             { text: "None", value: "none" },
             { text: "Password", value: "password" },
+            { text: "Email token", value: "email-token" },
           ]}
         />
         <ProtectionSpecificForm protectionType={protectionType} />
