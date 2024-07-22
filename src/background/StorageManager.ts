@@ -18,8 +18,11 @@ export class StorageManager {
   }
   static async isMigrating(): Promise<boolean> {
     return browser.storage.local
-      .get("v")
-      .then((result: { v?: number }) => Object.keys(result).length == 0);
+      .get(null)
+      .then(
+        (result: { v?: number; [key: string]: any }) =>
+          Object.keys(result).length > 0 && !("v" in result)
+      );
   }
   static migrateToNewVersion(): void {
     browser.storage.local.get(null, (result: { [key: string]: any }) => {
