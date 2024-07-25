@@ -1,8 +1,8 @@
 import { StorageManager } from "./StorageManager";
 import type { Storage } from "./browser.d.ts";
 
-function initializeStorage(storage: Storage) {
-  StorageManager.initializeStorage(storage);
+async function initializeStorage(storage: Storage) {
+  await StorageManager.initializeStorage(storage);
 }
 
 async function blockPages(
