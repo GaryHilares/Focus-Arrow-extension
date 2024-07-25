@@ -19,12 +19,7 @@ function getCurrentTimeInHHMM() {
 export class BlockEntry {
   startTime: number;
   endTime: number;
-  constructor(
-    private name: string,
-    private urlPattern: string,
-    startTime: string,
-    endTime: string
-  ) {
+  constructor(private urlPattern: string, startTime: string, endTime: string) {
     this.startTime = toMinutesSinceDayStart(startTime);
     this.endTime = toMinutesSinceDayStart(endTime);
   }

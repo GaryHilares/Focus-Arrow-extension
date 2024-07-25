@@ -23,8 +23,7 @@ function ProfileManager({
       </header>
       <ul>
         {patterns.map((pattern) => (
-          <li key={pattern.name} className={styles.entry}>
-            <span className={styles["entry-name"]}>{pattern.name}</span>
+          <li key={pattern.url} className={styles.entry}>
             <span className={styles["entry-url"]}>{pattern.url}</span>
             <ul>
               <li>
