@@ -46,7 +46,9 @@ function LabelledSelectInput({
         onChange={(e) => onChange(e.target.value)}
       >
         {options.map(({ text, value }) => (
-          <option value={value}>{text}</option>
+          <option key={value} value={value}>
+            {text}
+          </option>
         ))}
       </select>
     </div>
@@ -74,4 +76,29 @@ function LabelledTimeInput({ value, onChange, label }: LabelledTimeInputProps) {
   );
 }
 
-export { LabelledTextInput, LabelledSelectInput, LabelledTimeInput };
+interface LabelledButtonInputProps {
+  text: string;
+  onClick: () => void;
+  label: string;
+}
+
+function LabelledButtonInput({
+  text,
+  onClick,
+  label,
+}: LabelledButtonInputProps) {
+  const inputId = useId();
+  return (
+    <div className={styles.wrapper}>
+      <label htmlFor={inputId}>{label}</label>
+      <input type="button" id={inputId} value={text} onClick={onClick} />
+    </div>
+  );
+}
+
+export {
+  LabelledTextInput,
+  LabelledSelectInput,
+  LabelledTimeInput,
+  LabelledButtonInput,
+};

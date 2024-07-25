@@ -41,7 +41,10 @@ function EditModal({
   }
   function validate(newPattern: Pattern): boolean {
     for (let pattern of patterns) {
-      if (newPattern.name === pattern.name) {
+      if (
+        newPattern.name === pattern.name &&
+        (!target || pattern.name !== target.name)
+      ) {
         return false;
       }
     }
@@ -85,8 +88,8 @@ function EditModal({
           label="End time"
         />
         <div className={styles["button-box"]}>
-          <input type="submit" />
-          <input type="reset" />
+          <input type="submit" value="Accept" />
+          <input type="reset" value="Cancel" />
         </div>
       </form>
     </Modal>
