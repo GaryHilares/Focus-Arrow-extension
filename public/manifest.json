@@ -3,7 +3,7 @@
   "version": "1.3.2",
   "description": "A customizable page blocker perfect for your needs.",
   "permissions": ["storage", "tabs"],
-  "host_permissions": ["https://liberty-arrow-backend.vercel.app/*"],
+  "host_permissions": ["https://liberty-arrow-api.vercel.app/*"],
   "background": {
     "scripts": ["background/bundle.js"]
   },
