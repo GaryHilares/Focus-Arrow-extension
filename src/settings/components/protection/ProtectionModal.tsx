@@ -28,7 +28,7 @@ function PasswordSpecificForm({ onSuccess }: { onSuccess: () => void }) {
             label="Password"
           />
           <div className={styles["button-box"]}>
-            <input type="submit" />
+            <input type="submit" value="Check password" />
           </div>
         </form>
       </Modal>
@@ -75,7 +75,7 @@ function EmailSpecificForm({ onSuccess }: { onSuccess: () => void }) {
             label="Emailed password"
           />
           <div className={styles["button-box"]}>
-            <input type="submit" />
+            <input type="submit" value="Check token" />
           </div>
         </form>
       </Modal>

@@ -85,8 +85,8 @@ function EditModal({
           label="End time"
         />
         <div className={styles["button-box"]}>
-          <input type="submit" />
-          <input type="reset" />
+          <input type="submit" value="Accept" />
+          <input type="reset" value="Cancel" />
         </div>
       </form>
     </Modal>
