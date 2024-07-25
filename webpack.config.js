@@ -14,24 +14,26 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /tests/],
         use: {
           loader: "ts-loader",
         },
       },
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /tests/],
         use: {
           loader: "babel-loader",
         },
       },
       {
         test: /\.s[ac]ss$/,
+        exclude: [/node_modules/, /tests/],
         use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
         test: /\.css$/,
+        exclude: [/node_modules/, /tests/],
         use: ["style-loader", "css-loader"],
       },
     ],
