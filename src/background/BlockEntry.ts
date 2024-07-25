@@ -29,50 +29,32 @@ export class BlockEntry {
     this.startTime = toMinutesSinceDayStart(startTime);
     this.endTime = toMinutesSinceDayStart(endTime);
   }
-  matchUrl(url: string): boolean {
-    if (!this.matchesUrl) {
-      return false;
-    }
-    const pattern = this.urlPattern;
+  private isEnabled(): boolean {
     const startTime = this.startTime;
     const endTime = this.endTime;
     const now = toMinutesSinceDayStart(getCurrentTimeInHHMM());
     const isInTimeRange =
       (startTime < now && endTime > now) ||
       (startTime > endTime && (startTime < now || endTime > now));
-    if (
-      pattern.startsWith("/") &&
-      pattern.endsWith("/") &&
-      pattern.length >= 2
-    ) {
-      return (
-        isInTimeRange &&
-        RegExp(pattern.substring(1, pattern.length - 1), "i").test(url)
-      );
-    }
-    return isInTimeRange && url.toLowerCase().includes(pattern.toLowerCase());
+    return isInTimeRange;
   }
-  matchTitle(title: string): boolean {
-    if (!this.matchesTitle) {
-      return false;
-    }
-    const pattern = this.urlPattern;
-    const startTime = this.startTime;
-    const endTime = this.endTime;
-    const now = toMinutesSinceDayStart(getCurrentTimeInHHMM());
-    const isInTimeRange =
-      (startTime < now && endTime > now) ||
-      (startTime > endTime && (startTime < now || endTime > now));
+  private matchString(str: string): boolean {
     if (
-      pattern.startsWith("/") &&
-      pattern.endsWith("/") &&
-      pattern.length >= 2
+      this.urlPattern.startsWith("/") &&
+      this.urlPattern.endsWith("/") &&
+      this.urlPattern.length >= 2
     ) {
-      return (
-        isInTimeRange &&
-        RegExp(pattern.substring(1, pattern.length - 1), "i").test(title)
-      );
+      return RegExp(
+        this.urlPattern.substring(1, this.urlPattern.length - 1),
+        "i"
+      ).test(str);
     }
-    return isInTimeRange && title.toLowerCase().includes(pattern.toLowerCase());
+    return str.toLowerCase().includes(this.urlPattern.toLowerCase());
+  }
+  public matchUrl(url: string): boolean {
+    return this.matchesUrl && this.isEnabled() && this.matchString(url);
+  }
+  public matchTitle(title: string): boolean {
+    return this.matchesTitle && this.isEnabled() && this.matchString(title);
   }
 }
