@@ -19,11 +19,20 @@ function getCurrentTimeInHHMM() {
 export class BlockEntry {
   startTime: number;
   endTime: number;
-  constructor(private urlPattern: string, startTime: string, endTime: string) {
+  constructor(
+    private urlPattern: string,
+    private matchesUrl: boolean,
+    private matchesTitle: boolean,
+    startTime: string,
+    endTime: string
+  ) {
     this.startTime = toMinutesSinceDayStart(startTime);
     this.endTime = toMinutesSinceDayStart(endTime);
   }
-  match(url: string): boolean {
+  matchUrl(url: string): boolean {
+    if (!this.matchesUrl) {
+      return false;
+    }
     const pattern = this.urlPattern;
     const startTime = this.startTime;
     const endTime = this.endTime;
@@ -42,5 +51,28 @@ export class BlockEntry {
       );
     }
     return isInTimeRange && url.toLowerCase().includes(pattern.toLowerCase());
+  }
+  matchTitle(title: string): boolean {
+    if (!this.matchesTitle) {
+      return false;
+    }
+    const pattern = this.urlPattern;
+    const startTime = this.startTime;
+    const endTime = this.endTime;
+    const now = toMinutesSinceDayStart(getCurrentTimeInHHMM());
+    const isInTimeRange =
+      (startTime < now && endTime > now) ||
+      (startTime > endTime && (startTime < now || endTime > now));
+    if (
+      pattern.startsWith("/") &&
+      pattern.endsWith("/") &&
+      pattern.length >= 2
+    ) {
+      return (
+        isInTimeRange &&
+        RegExp(pattern.substring(1, pattern.length - 1), "i").test(title)
+      );
+    }
+    return isInTimeRange && title.toLowerCase().includes(pattern.toLowerCase());
   }
 }

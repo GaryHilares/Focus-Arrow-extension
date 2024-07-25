@@ -2,6 +2,8 @@ import { BlockEntry } from "./BlockEntry";
 
 export interface InStoragePattern {
   url: string;
+  matchesUrl: boolean;
+  matchesTitle: boolean;
   startTime: string;
   endTime: string;
 }
@@ -11,10 +13,19 @@ export class BlockManager {
   constructor(patterns: InStoragePattern[]) {
     this.entries = patterns.map(
       (pattern) =>
-        new BlockEntry(pattern.url, pattern.startTime, pattern.endTime)
+        new BlockEntry(
+          pattern.url,
+          pattern.matchesUrl,
+          pattern.matchesTitle,
+          pattern.startTime,
+          pattern.endTime
+        )
     );
   }
-  checkForMatch(url: string): boolean {
-    return this.entries.some((entry) => entry.match(url));
+  checkUrlForMatch(url: string): boolean {
+    return this.entries.some((entry) => entry.matchUrl(url));
+  }
+  checkTitleForMatch(title: string): boolean {
+    return this.entries.some((entry) => entry.matchTitle(title));
   }
 }

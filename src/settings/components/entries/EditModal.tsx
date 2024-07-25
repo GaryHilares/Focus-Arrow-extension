@@ -2,7 +2,11 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { Pattern } from "./Pattern";
 import { Modal } from "../common/Modal";
-import { LabelledTextInput, LabelledTimeInput } from "../common/LabelledInputs";
+import {
+  LabelledCheckboxInput,
+  LabelledTextInput,
+  LabelledTimeInput,
+} from "../common/LabelledInputs";
 import * as styles from "./EditModal.module.scss";
 
 interface EditModalProps {
@@ -20,17 +24,23 @@ function EditModal({
   target,
   closeModal,
 }: EditModalProps) {
+  const [matchesUrl, setMatchesUrl] = useState<boolean>(true);
+  const [matchesTitle, setMatchesTitle] = useState<boolean>(false);
   const [url, setUrl] = useState<string>("");
   const [startTime, setStartTime] = useState<string>("00:00");
   const [endTime, setEndTime] = useState<string>("23:59");
   useEffect(() => {
     if (target) {
+      setMatchesUrl(target.matchesUrl);
+      setMatchesTitle(target.matchesTitle);
       setUrl(target.url);
       setStartTime(target.startTime);
       setEndTime(target.endTime);
     }
   }, []);
   function close() {
+    setMatchesUrl(true);
+    setMatchesTitle(false);
     setUrl("");
     setStartTime("00:00");
     setEndTime("23:59");
@@ -49,7 +59,9 @@ function EditModal({
   }
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
-    const newPattern = {
+    const newPattern: Pattern = {
+      matchesUrl: matchesUrl,
+      matchesTitle: matchesTitle,
       url: url,
       startTime: startTime,
       endTime: endTime,
@@ -72,6 +84,16 @@ function EditModal({
       >
         <h1>Create entry</h1>
         <LabelledTextInput value={url} onChange={setUrl} label="URL" />
+        <LabelledCheckboxInput
+          value={matchesUrl}
+          onChange={setMatchesUrl}
+          label="Match URL"
+        />
+        <LabelledCheckboxInput
+          value={matchesTitle}
+          onChange={setMatchesTitle}
+          label="Match title"
+        />
         <LabelledTimeInput
           value={startTime}
           onChange={setStartTime}

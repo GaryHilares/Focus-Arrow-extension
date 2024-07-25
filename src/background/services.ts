@@ -10,11 +10,14 @@ async function blockPages(
   tabId: number,
   changeInfo: { url?: string; tab: any; [key: string]: any }
 ) {
-  if (changeInfo.url) {
-    const url = changeInfo.url;
+  if (changeInfo.url || changeInfo.title) {
     const mgr = new StorageManager();
     const blockMgr = await mgr.loadBlockManager();
-    const shouldUpdate = blockMgr.checkForMatch(url);
+    const matchesTitle =
+      changeInfo.title && blockMgr.checkTitleForMatch(changeInfo.title);
+    const matchesUrl =
+      changeInfo.url && blockMgr.checkUrlForMatch(changeInfo.url);
+    const shouldUpdate = matchesTitle || matchesUrl;
     if (shouldUpdate) {
       const theme = await mgr.loadTheme();
       browser.tabs.update(tabId, {
