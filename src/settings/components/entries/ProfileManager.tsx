@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Pattern } from "./Pattern";
+import type { Pattern } from "./Pattern";
 import * as styles from "./ProfileManager.module.scss";
 
 interface ProfileManagerProps {

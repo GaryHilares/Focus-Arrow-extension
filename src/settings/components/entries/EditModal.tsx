@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { Pattern } from "./Pattern";
+import type { Pattern } from "./Pattern";
 import { Modal } from "../common/Modal";
 import {
   LabelledCheckboxInput,
