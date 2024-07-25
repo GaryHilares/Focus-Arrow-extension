@@ -96,9 +96,35 @@ function LabelledButtonInput({
   );
 }
 
+interface LabelledCheckboxInputProps {
+  value: boolean;
+  onChange: (checked: boolean) => void;
+  label: string;
+}
+
+function LabelledCheckboxInput({
+  value,
+  onChange,
+  label,
+}: LabelledCheckboxInputProps) {
+  const inputId = useId();
+  return (
+    <div className={styles.wrapper}>
+      <label htmlFor={inputId}>{label}</label>
+      <input
+        type="checkbox"
+        id={inputId}
+        checked={value}
+        onChange={(e) => onChange(e.target.checked)}
+      />
+    </div>
+  );
+}
+
 export {
   LabelledTextInput,
   LabelledSelectInput,
   LabelledTimeInput,
   LabelledButtonInput,
+  LabelledCheckboxInput,
 };
