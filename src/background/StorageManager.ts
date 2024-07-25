@@ -1,14 +1,13 @@
 import { BlockManager, InStoragePattern } from "./BlockManager";
-
-declare var browser: any;
+import type { Storage } from "./browser.d.ts";
 
 export class StorageManager {
-  static async initializeStorage(): Promise<void> {
-    if (await StorageManager.isMigrating()) {
-      StorageManager.migrateToNewVersion();
+  static async initializeStorage(storage: Storage): Promise<void> {
+    if (await StorageManager.isMigrating(storage)) {
+      StorageManager.migrateToNewVersion(storage);
       return;
     }
-    browser.storage.local.set({
+    storage.set({
       patterns: [],
       theme: "default",
       protectionType: "none",
@@ -16,16 +15,16 @@ export class StorageManager {
       v: 0,
     });
   }
-  static async isMigrating(): Promise<boolean> {
-    return browser.storage.local
+  static async isMigrating(storage: Storage): Promise<boolean> {
+    return storage
       .get(null)
       .then(
         (result: { v?: number; [key: string]: any }) =>
           Object.keys(result).length > 0 && !("v" in result)
       );
   }
-  static migrateToNewVersion(): void {
-    browser.storage.local.get(null, (result: { [key: string]: any }) => {
+  static migrateToNewVersion(storage: Storage): void {
+    storage.get(null).then((result: { [key: string]: any }) => {
       const sites = result.blockedPages.sites.map(
         (site: any, index: number) => ({
           name: `Entry ${index}`,
@@ -37,7 +36,7 @@ export class StorageManager {
       const protectionType = result.passwordData.protectionType.toLowerCase();
       const isProtectionTypeValid =
         protectionType == "none" || protectionType == "password";
-      browser.storage.local
+      storage
         .set({
           patterns: sites,
           theme: result.theme,
@@ -49,20 +48,18 @@ export class StorageManager {
           blockedPages: null,
           passwordData: null,
         })
-        .then(() =>
-          browser.storage.local.remove(["blockedPages", "passwordData"])
-        );
+        .then(() => storage.remove(["blockedPages", "passwordData"]));
     });
   }
-  async loadBlockManager(): Promise<BlockManager> {
-    return browser.storage.local
+  async loadBlockManager(storage: Storage): Promise<BlockManager> {
+    return storage
       .get("patterns")
       .then((result: { patterns: InStoragePattern[] }) => {
         return new BlockManager(result.patterns);
       });
   }
-  async loadTheme(): Promise<string> {
-    return browser.storage.local
+  async loadTheme(storage: Storage): Promise<string> {
+    return storage
       .get("theme")
       .then((result: { theme: string }) => result.theme);
   }
