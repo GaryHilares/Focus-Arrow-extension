@@ -41,7 +41,10 @@ function EditModal({
   }
   function validate(newPattern: Pattern): boolean {
     for (let pattern of patterns) {
-      if (newPattern.name === pattern.name) {
+      if (
+        newPattern.name === pattern.name &&
+        (!target || pattern.name !== target.name)
+      ) {
         return false;
       }
     }
