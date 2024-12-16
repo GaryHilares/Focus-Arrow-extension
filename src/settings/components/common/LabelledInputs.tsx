@@ -23,6 +23,31 @@ function LabelledTextInput({ value, onChange, label }: LabelledTextInputProps) {
   );
 }
 
+interface LabelledEmailInputProps {
+  value: string;
+  onChange: (newValue: string) => void;
+  label: string;
+}
+
+function LabelledEmailInput({
+  value,
+  onChange,
+  label,
+}: LabelledEmailInputProps) {
+  const inputId = useId();
+  return (
+    <div className={styles.wrapper}>
+      <label htmlFor={inputId}>{label}</label>
+      <input
+        type="email"
+        id={inputId}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </div>
+  );
+}
+
 interface LabelledSelectInputProps {
   value: string;
   onChange: (newValue: string) => void;
@@ -98,6 +123,7 @@ function LabelledButtonInput({
 
 export {
   LabelledTextInput,
+  LabelledEmailInput,
   LabelledSelectInput,
   LabelledTimeInput,
   LabelledButtonInput,
