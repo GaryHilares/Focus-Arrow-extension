@@ -3,9 +3,12 @@ import { useState } from "react";
 import { ProfileManager } from "./ProfileManager";
 import { EditModal } from "./EditModal";
 import { useSyncedPatterns } from "../../hooks/useSyncedPaterns";
+import { Pattern } from "./Pattern";
 
 function EntryEditor() {
-  const [modalMode, setModalMode] = useState(null);
+  const [modalMode, setModalMode] = useState<
+    null | { mode: "new" } | { mode: "edit"; target: Pattern }
+  >(null);
   const [loaded, patterns, addPattern, editPattern, deletePattern] =
     useSyncedPatterns();
 

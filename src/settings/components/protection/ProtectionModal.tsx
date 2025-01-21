@@ -45,11 +45,8 @@ function EmailSpecificForm({ onSuccess }: { onSuccess: () => void }) {
   useEffect(() => {
     console.log("Running effect with:", loaded, protectionDetails);
     if (loaded) {
-      console.log(
-        `Fetching https://liberty-arrow-api.vercel.app/email-code?email=${protectionDetails.email}`
-      );
       fetch(
-        `https://liberty-arrow-api.vercel.app/email-code?email=${protectionDetails.email}`
+        `https://liberty-arrow-api.vercel.app/send-token?email=${protectionDetails.email}`
       )
         .then((response) => response.json())
         .then((json) => setActualToken(json.result));
