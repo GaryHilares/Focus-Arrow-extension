@@ -2,10 +2,18 @@ import { StorageManager } from "./StorageManager";
 
 declare var browser: any;
 
+/**
+ * Initializes the storage of the browser.
+ */
 function initializeStorage() {
   StorageManager.initializeStorage();
 }
 
+/**
+ * Checks a tab and blocks it should it be blocked.
+ * @param tabId ID of tab that is being checked.
+ * @param changeInfo New information of the tab being checked.
+ */
 async function blockPages(
   tabId: number,
   changeInfo: { url?: string; tab: any; [key: string]: any }

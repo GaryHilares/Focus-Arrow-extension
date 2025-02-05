@@ -2,8 +2,14 @@ import { BlockManager, InStoragePattern } from "./BlockManager";
 
 declare var browser: any;
 
+/**
+ * Class that manages the storage of the extension.
+ */
 export class StorageManager {
-  static async initializeStorage(): Promise<void> {
+  /**
+   * Initializes the storage of the extension.
+   */
+  public static async initializeStorage(): Promise<void> {
     if (await StorageManager.isMigrating()) {
       StorageManager.migrateToNewVersion();
       return;
@@ -16,7 +22,12 @@ export class StorageManager {
       v: 0,
     });
   }
-  static async isMigrating(): Promise<boolean> {
+
+  /**
+   * Checks if the storage needs to be migrated to a new version.
+   * @returns Will resolve to true if migration is required, false otherwise.
+   */
+  public static async isMigrating(): Promise<boolean> {
     return browser.storage.local
       .get(null)
       .then(
@@ -24,7 +35,11 @@ export class StorageManager {
           Object.keys(result).length > 0 && !("v" in result)
       );
   }
-  static migrateToNewVersion(): void {
+
+  /**
+   * Migrates storage information to a new version.
+   */
+  public static migrateToNewVersion(): void {
     browser.storage.local.get(null, (result: { [key: string]: any }) => {
       const sites = result.blockedPages.sites.map(
         (site: any, index: number) => ({
@@ -54,14 +69,24 @@ export class StorageManager {
         );
     });
   }
-  async loadBlockManager(): Promise<BlockManager> {
+
+  /**
+   * Loads a BlockManager with the patterns in storage.
+   * @returns Resolves to BlockManager with in-storage patterns.
+   */
+  public async loadBlockManager(): Promise<BlockManager> {
     return browser.storage.local
       .get("patterns")
       .then((result: { patterns: InStoragePattern[] }) => {
         return new BlockManager(result.patterns);
       });
   }
-  async loadTheme(): Promise<string> {
+
+  /**
+   * Loads the theme name in-storage.
+   * @returns Will resolve to in-storage theme name.
+   */
+  public async loadTheme(): Promise<string> {
     return browser.storage.local
       .get("theme")
       .then((result: { theme: string }) => result.theme);
