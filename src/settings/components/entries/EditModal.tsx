@@ -2,7 +2,11 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { Pattern } from "./Pattern";
 import { Modal } from "../common/Modal";
-import { LabelledTextInput, LabelledTimeInput } from "../common/LabelledInputs";
+import {
+  ButtonBox,
+  LabelledTextInput,
+  LabelledTimeInput,
+} from "../common/LabelledInputs";
 import * as styles from "./EditModal.module.scss";
 
 interface EditModalProps {
@@ -87,10 +91,7 @@ function EditModal({
           onChange={setEndTime}
           label="End time"
         />
-        <div className={styles["button-box"]}>
-          <input type="submit" value="Accept" />
-          <input type="reset" value="Cancel" />
-        </div>
+        <ButtonBox />
       </form>
     </Modal>
   );

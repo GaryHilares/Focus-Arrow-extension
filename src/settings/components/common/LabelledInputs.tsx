@@ -18,6 +18,7 @@ function LabelledTextInput({ value, onChange, label }: LabelledTextInputProps) {
         id={inputId}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        className={styles["text-input"]}
       />
     </div>
   );
@@ -69,6 +70,7 @@ function LabelledSelectInput({
         id={inputId}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        className={styles["select-input"]}
       >
         {options.map(({ text, value }) => (
           <option key={value} value={value}>
@@ -96,6 +98,7 @@ function LabelledTimeInput({ value, onChange, label }: LabelledTimeInputProps) {
         id={inputId}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        className={styles["time-input"]}
       />
     </div>
   );
@@ -116,7 +119,30 @@ function LabelledButtonInput({
   return (
     <div className={styles.wrapper}>
       <label htmlFor={inputId}>{label}</label>
-      <input type="button" id={inputId} value={text} onClick={onClick} />
+      <input
+        className={styles["button-input"]}
+        type="button"
+        id={inputId}
+        value={text}
+        onClick={onClick}
+      />
+    </div>
+  );
+}
+
+function ButtonBox() {
+  return (
+    <div className={styles["button-box"]}>
+      <input
+        className={styles["button-box-submit"]}
+        type="submit"
+        value="Accept"
+      />
+      <input
+        className={styles["button-box-reset"]}
+        type="reset"
+        value="Cancel"
+      />
     </div>
   );
 }
@@ -127,4 +153,5 @@ export {
   LabelledSelectInput,
   LabelledTimeInput,
   LabelledButtonInput,
+  ButtonBox,
 };

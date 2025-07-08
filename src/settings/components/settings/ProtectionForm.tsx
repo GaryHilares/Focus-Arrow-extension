@@ -159,7 +159,8 @@ class NoProtectionType implements ProtectionType {
 class PasswordType implements ProtectionType {
   constructor(
     private openModal: () => void,
-    private onSubmit: (protectionId: string, password: string) => void
+    private onSubmit: (protectionId: string, password: string) => void,
+    private onReset: () => void
   ) {}
   getDescriptiveString(): string {
     return "Password";
@@ -185,6 +186,7 @@ class PasswordType implements ProtectionType {
         onSubmit={(password: string) =>
           this.onSubmit(this.getIdString(), password)
         }
+        onReset={() => this.onReset()}
       />
     );
   }
@@ -193,7 +195,8 @@ class PasswordType implements ProtectionType {
 class EmailTokenType implements ProtectionType {
   constructor(
     private openModal: () => void,
-    private onSubmit: (protectionId: string, email: string) => void
+    private onSubmit: (protectionId: string, email: string) => void,
+    private onReset: () => void
   ) {}
   getDescriptiveString(): string {
     return "Email Token";
@@ -217,6 +220,7 @@ class EmailTokenType implements ProtectionType {
     return (
       <EmailTokenModal
         onSubmit={(email: string) => this.onSubmit(this.getIdString(), email)}
+        onReset={() => this.onReset()}
       />
     );
   }
@@ -250,6 +254,9 @@ function ProtectionForm() {
               setProtectionType(protectionId);
               setProtectionDetails({ password: password });
               setShowModal(false);
+            },
+            () => {
+              setShowModal(false);
             }
           ),
           new EmailTokenType(
@@ -259,6 +266,9 @@ function ProtectionForm() {
             (protectionId: string, email: string) => {
               setProtectionType(protectionId);
               setProtectionDetails({ email: email });
+              setShowModal(false);
+            },
+            () => {
               setShowModal(false);
             }
           ),

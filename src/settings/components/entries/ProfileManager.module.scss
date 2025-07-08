@@ -1,39 +1,61 @@
+@use "../common/rounded-button.scss" as m;
+
 .main {
   header {
+    overflow: auto;
+    font-size: 1.25rem;
+    &::after {
+      clear: both;
+    }
     h1 {
       font-weight: bold;
       display: inline-block;
     }
-    button {
+    .new-button {
+      @include m.rounded-button(blue);
       float: right;
     }
   }
 }
 
 .entry {
-  margin: 1rem 0;
+  margin: 0.5rem 0;
+  overflow: auto;
+  &::after {
+    content: "";
+    clear: both;
+  }
 
-  span {
+  .entry-name {
+    display: inline-block;
+    color: black;
+    margin: 0 0.25rem 0 0;
     font-weight: bold;
   }
-  ul {
+  .entry-url {
+    display: inline-block;
+    color: gray;
+    margin: 0 0.25rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+  }
+  .entry-time {
+    display: inline-block;
+    color: gray;
+    margin: 0 0.25rem;
+    font-size: 0.75rem;
+  }
+  ul.button-box {
     float: right;
     li {
       display: inline-block;
       margin: 0 0 0 0.25rem;
+      .edit-button {
+        @include m.rounded-button(orange);
+      }
+      .delete-button {
+        @include m.rounded-button(red);
+      }
     }
   }
-}
-
-.entry-name {
-  display: inline-block;
-  color: black;
-  margin: 0 0.25rem 0 0;
-}
-
-.entry-url {
-  display: inline-block;
-  color: gray;
-  margin: 0 0.25rem;
-  font-size: 0.75rem;
 }

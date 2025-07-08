@@ -1,6 +1,6 @@
 $background-color: white;
 $primary-color: rgb(84, 90, 167);
-$header-height: 7.5vh;
+$header-height: 10vh;
 
 .header {
   background-color: $background-color;
@@ -36,6 +36,7 @@ $header-height: 7.5vh;
           outline: none;
           &:focus,
           &:hover {
+            cursor: pointer;
             text-decoration: underline;
             color: $primary-color;
           }

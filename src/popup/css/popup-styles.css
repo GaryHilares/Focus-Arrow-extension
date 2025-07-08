@@ -1,41 +1,42 @@
 body {
-    margin: 20px;
-    width: 260px;
-    min-height: 160px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 20px;
+  width: 260px;
+  min-height: 160px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 .popup__title {
-    font-weight: bold;
-    text-align: center;
-    font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.25rem;
 }
 
 .popup__version_indicator {
-    text-align: center;
+  text-align: center;
 }
 
 .popup__button_box {
-    text-align: center;
-    margin: 5px 0;
+  text-align: center;
+  margin: 5px 0;
 }
 
 .logo_wrapper {
-    text-align: center;
-    margin: 10px;
+  text-align: center;
+  margin: 10px;
 }
 
 .settings_button {
-    display: block;
-    padding: 5px;
-    transition: all 0.5s;
-    color: #545AA7;
-    background-color: transparent;
+  display: block;
+  padding: 5px;
+  transition: all 0.5s;
+  color: #545aa7;
+  background-color: transparent;
 }
 
 .settings_button:hover,
 .settings_button:focus {
-    transition: all 0.5s;
-    color: white;
-    background-color: #545AA7;
+  transition: all 0.5s;
+  color: white;
+  background-color: #545aa7;
 }

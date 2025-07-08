@@ -1,3 +1,5 @@
+@use "../common/rounded-button.scss" as m;
+
 .wrapper {
   margin: 0.5rem 0;
   select,
@@ -8,5 +10,59 @@
     clear: both;
     display: table;
     content: "";
+  }
+}
+
+.text-input {
+  outline: none;
+  border: 1px solid black;
+  padding: 3px;
+  border-radius: 5px;
+  &:focus {
+    transition: all 0.25s;
+    outline: 1px solid blue;
+  }
+}
+
+.select-input {
+  background-color: transparent;
+  outline: none;
+  border: 1px solid black;
+  padding: 3px;
+  border-radius: 5px;
+  &:focus {
+    transition: all 0.25s;
+    outline: 1px solid blue;
+  }
+}
+
+.time-input {
+  outline: none;
+  border: 1px solid black;
+  padding: 3px;
+  border-radius: 10px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  &:focus {
+    transition: all 0.25s;
+    outline: 1px solid blue;
+  }
+}
+
+.button-input {
+  @include m.rounded-button(blue);
+}
+
+.button-box {
+  text-align: center;
+  input {
+    display: inline-block;
+    margin: 0 0.5rem;
+  }
+  .button-box-submit {
+    @include m.rounded-button(green);
+  }
+  .button-box-reset {
+    @include m.rounded-button(red);
   }
 }

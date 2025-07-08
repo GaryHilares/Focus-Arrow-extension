@@ -2,11 +2,18 @@ import * as React from "react";
 import { useState } from "react";
 import { Modal } from "../common/Modal";
 import {
+  ButtonBox,
   LabelledButtonInput,
   LabelledEmailInput,
 } from "../common/LabelledInputs";
 
-function EmailTokenModal({ onSubmit }: { onSubmit: (email: string) => void }) {
+function EmailTokenModal({
+  onSubmit,
+  onReset,
+}: {
+  onSubmit: (email: string) => void;
+  onReset: () => void;
+}) {
   const [email, setEmail] = useState<string>("");
   const [message, setMessage] = useState<string | null>(null);
   async function sendVerificationEmail() {
@@ -17,7 +24,8 @@ function EmailTokenModal({ onSubmit }: { onSubmit: (email: string) => void }) {
       setMessage("Error while trying to verify email.");
     }
   }
-  async function checkVerification() {
+  async function checkVerification(e: React.FormEvent) {
+    e.preventDefault();
     const response = await fetch(
       `https://liberty-arrow-api.vercel.app/check-email?email=${email}`
     );
@@ -33,18 +41,16 @@ function EmailTokenModal({ onSubmit }: { onSubmit: (email: string) => void }) {
   }
   return (
     <Modal>
-      <LabelledEmailInput label="Email" value={email} onChange={setEmail} />
-      <LabelledButtonInput
-        label="Send verification email"
-        text="Send"
-        onClick={sendVerificationEmail}
-      />
-      <LabelledButtonInput
-        label="Verify email"
-        text="Verify"
-        onClick={checkVerification}
-      />
-      {message && <span>{message}</span>}
+      <form onSubmit={checkVerification} onReset={onReset}>
+        <LabelledEmailInput label="Email" value={email} onChange={setEmail} />
+        <LabelledButtonInput
+          label="Send verification email"
+          text="Send"
+          onClick={sendVerificationEmail}
+        />
+        {message && <span>{message}</span>}
+        <ButtonBox />
+      </form>
     </Modal>
   );
 }

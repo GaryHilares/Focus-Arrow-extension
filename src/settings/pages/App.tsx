@@ -22,11 +22,11 @@ function TabMapper({ tab }: { tab: Tab }) {
 function TabNavigation({ setTab }: { setTab: (tab: Tab) => void }) {
   return (
     <header className={styles.header}>
-      <div className="left-wrapper">
+      <div>
         <img
           src="/common/icons/Liberty_Arrow_text-false.png"
-          width="50px"
-          height="50px"
+          width="40px"
+          height="40px"
         />
         <h1>Liberty Arrow</h1>
       </div>

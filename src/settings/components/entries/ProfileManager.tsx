@@ -2,6 +2,48 @@ import * as React from "react";
 import { Pattern } from "./Pattern";
 import * as styles from "./ProfileManager.module.scss";
 
+interface ProfileEntryProps {
+  pattern: Pattern;
+  deletePattern: (oldPattern: Pattern) => void;
+  setModalMode: (
+    mode: { mode: "new" } | { mode: "edit"; target: Pattern }
+  ) => void;
+}
+
+function ProfileEntry({
+  pattern,
+  setModalMode,
+  deletePattern,
+}: ProfileEntryProps) {
+  return (
+    <li className={styles.entry}>
+      <span className={styles["entry-name"]}>{pattern.name}</span>
+      <span className={styles["entry-url"]}>{pattern.url}</span>
+      <span className={styles["entry-time"]}>
+        ({pattern.startTime} - {pattern.endTime})
+      </span>
+      <ul className={styles["button-box"]}>
+        <li>
+          <button
+            className={styles["edit-button"]}
+            onClick={() => setModalMode({ mode: "edit", target: pattern })}
+          >
+            Edit
+          </button>
+        </li>
+        <li>
+          <button
+            className={styles["delete-button"]}
+            onClick={() => deletePattern(pattern)}
+          >
+            Delete
+          </button>
+        </li>
+      </ul>
+    </li>
+  );
+}
+
 interface ProfileManagerProps {
   patterns: Pattern[];
   deletePattern: (oldPattern: Pattern) => void;
@@ -19,28 +61,21 @@ function ProfileManager({
     <section className={styles.main}>
       <header>
         <h1>Pages</h1>
-        <button onClick={() => setModalMode({ mode: "new" })}>Add</button>
+        <button
+          className={styles["new-button"]}
+          onClick={() => setModalMode({ mode: "new" })}
+        >
+          Add
+        </button>
       </header>
       <ul>
         {patterns.map((pattern) => (
-          <li key={pattern.name} className={styles.entry}>
-            <span className={styles["entry-name"]}>{pattern.name}</span>
-            <span className={styles["entry-url"]}>{pattern.url}</span>
-            <ul>
-              <li>
-                <button
-                  onClick={() =>
-                    setModalMode({ mode: "edit", target: pattern })
-                  }
-                >
-                  Edit
-                </button>
-              </li>
-              <li>
-                <button onClick={() => deletePattern(pattern)}>Delete</button>
-              </li>
-            </ul>
-          </li>
+          <ProfileEntry
+            key={pattern.name}
+            pattern={pattern}
+            setModalMode={setModalMode}
+            deletePattern={deletePattern}
+          />
         ))}
       </ul>
     </section>
