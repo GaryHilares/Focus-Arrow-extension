@@ -16,7 +16,7 @@ export class StorageManager {
     }
     browser.storage.local.set({
       patterns: [],
-      theme: "https://liberty-arrow-api.vercel.app/block-screens/default",
+      theme: "https://focus-arrow-api.vercel.app/block-screens/default",
       protectionType: "none",
       protectionDetails: null,
       email: null,

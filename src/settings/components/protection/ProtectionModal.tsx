@@ -18,7 +18,7 @@ function PasswordSpecificForm({ onSuccess }: { onSuccess: () => void }) {
   }
 
   function handleReset() {
-    window.location.replace("https://liberty-arrow-api.vercel.app/");
+    window.location.replace("https://focus-arrow-api.vercel.app/");
   }
 
   return (
@@ -29,7 +29,7 @@ function PasswordSpecificForm({ onSuccess }: { onSuccess: () => void }) {
           onSubmit={handleSubmit}
           onReset={handleReset}
         >
-          <h1>Log into Liberty Arrow</h1>
+          <h1>Log into Focus Arrow</h1>
           <LabelledTextInput
             value={password}
             onChange={setPassword}
@@ -52,7 +52,7 @@ function EmailSpecificForm({ onSuccess }: { onSuccess: () => void }) {
     console.log("Running effect with:", loaded, protectionDetails);
     if (loaded) {
       fetch(
-        `https://liberty-arrow-api.vercel.app/send-token?email=${protectionDetails.email}`
+        `https://focus-arrow-api.vercel.app/send-token?email=${protectionDetails.email}`
       )
         .then((response) => response.json())
         .then((json) => setActualToken(json.result));
@@ -67,7 +67,7 @@ function EmailSpecificForm({ onSuccess }: { onSuccess: () => void }) {
   }
 
   function handleReset() {
-    window.location.replace("https://liberty-arrow-api.vercel.app/");
+    window.location.replace("https://focus-arrow-api.vercel.app/");
   }
 
   return (
@@ -79,7 +79,7 @@ function EmailSpecificForm({ onSuccess }: { onSuccess: () => void }) {
           onSubmit={handleSubmit}
           onReset={handleReset}
         >
-          <h1>Log into Liberty Arrow</h1>
+          <h1>Log into Focus Arrow</h1>
           <LabelledTextInput
             value={inputToken}
             onChange={setInputToken}

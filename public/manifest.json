@@ -1,31 +1,31 @@
 {
-  "name": "Liberty Arrow",
+  "name": "Focus Arrow",
   "version": "1.4.0",
   "description": "A customizable page blocker perfect for your needs.",
   "permissions": ["storage", "tabs"],
-  "host_permissions": ["https://liberty-arrow-api.vercel.app/*"],
+  "host_permissions": ["https://focus-arrow-api.vercel.app/*"],
   "background": {
     "scripts": ["background/bundle.js"]
   },
   "action": {
-    "default_title": "Liberty Arrow's settings",
+    "default_title": "Focus Arrow's settings",
     "default_popup": "popup/popup.html",
     "default_icon": {
-      "16": "common/icons/Liberty_Arrow_text-false_16.png",
-      "32": "common/icons/Liberty_Arrow_text-false_32.png",
-      "48": "common/icons/Liberty_Arrow_text-false_48.png",
-      "128": "common/icons/Liberty_Arrow_text-false_128.png"
+      "16": "common/icons/Focus_Arrow_text-false_16.png",
+      "32": "common/icons/Focus_Arrow_text-false_32.png",
+      "48": "common/icons/Focus_Arrow_text-false_48.png",
+      "128": "common/icons/Focus_Arrow_text-false_128.png"
     }
   },
   "icons": {
-    "16": "common/icons/Liberty_Arrow_text-false_16.png",
-    "32": "common/icons/Liberty_Arrow_text-false_32.png",
-    "48": "common/icons/Liberty_Arrow_text-false_48.png",
-    "128": "common/icons/Liberty_Arrow_text-false_128.png"
+    "16": "common/icons/Focus_Arrow_text-false_16.png",
+    "32": "common/icons/Focus_Arrow_text-false_32.png",
+    "48": "common/icons/Focus_Arrow_text-false_48.png",
+    "128": "common/icons/Focus_Arrow_text-false_128.png"
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "{a0e75bdb-3d83-4d1e-8c9b-9cba5fee6414}"
+      "id": ""
     }
   },
   "manifest_version": 3

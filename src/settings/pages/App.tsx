@@ -24,11 +24,11 @@ function TabNavigation({ setTab }: { setTab: (tab: Tab) => void }) {
     <header className={styles.header}>
       <div>
         <img
-          src="/common/icons/Liberty_Arrow_text-false.png"
+          src="/common/icons/Focus_Arrow_text-false.png"
           width="40px"
           height="40px"
         />
-        <h1>Liberty Arrow</h1>
+        <h1>Focus Arrow</h1>
       </div>
       <nav>
         <ul>

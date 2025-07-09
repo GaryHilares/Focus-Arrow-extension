@@ -11,7 +11,7 @@ function initializeStorage() {
 
 function initializeUninstallUrl() {
   browser.runtime.setUninstallURL(
-    `https://liberty-arrow-api.vercel.app/uninstall`
+    `https://focus-arrow-api.vercel.app/uninstall`
   );
 }
 

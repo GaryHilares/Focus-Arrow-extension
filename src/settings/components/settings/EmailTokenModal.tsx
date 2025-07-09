@@ -18,7 +18,7 @@ function EmailTokenModal({
   const [message, setMessage] = useState<string | null>(null);
   async function sendVerificationEmail() {
     const response = await fetch(
-      `https://liberty-arrow-api.vercel.app/send-verification?email=${email}`
+      `https://focus-arrow-api.vercel.app/send-verification?email=${email}`
     );
     if (!response.ok) {
       setMessage("Error while trying to verify email.");
@@ -27,7 +27,7 @@ function EmailTokenModal({
   async function checkVerification(e: React.FormEvent) {
     e.preventDefault();
     const response = await fetch(
-      `https://liberty-arrow-api.vercel.app/check-email?email=${email}`
+      `https://focus-arrow-api.vercel.app/check-email?email=${email}`
     );
     if (!response.ok) {
       setMessage("Error while trying to check if email was verified.");
