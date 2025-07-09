@@ -9,6 +9,12 @@ function initializeStorage() {
   StorageManager.initializeStorage();
 }
 
+function initializeUninstallUrl() {
+  browser.runtime.setUninstallURL(
+    `https://liberty-arrow-api.vercel.app/uninstall`
+  );
+}
+
 /**
  * Checks a tab and blocks it should it be blocked.
  * @param tabId ID of tab that is being checked.
@@ -26,10 +32,10 @@ async function blockPages(
     if (shouldUpdate) {
       const theme = await mgr.loadTheme();
       browser.tabs.update(tabId, {
-        url: `https://liberty-arrow-api.vercel.app/block-screens/${theme}`,
+        url: theme,
       });
     }
   }
 }
 
-export { initializeStorage, blockPages };
+export { initializeStorage, initializeUninstallUrl, blockPages };

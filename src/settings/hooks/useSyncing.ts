@@ -42,4 +42,15 @@ function useSyncing<Type>(
   return [loaded, state, setState];
 }
 
-export { useAutoSave, useAutoInitialLoad, useSyncing };
+function setUninstallEmailAddress(email: string) {
+  browser.runtime.setUninstallURL(
+    `https://liberty-arrow-api.vercel.app/uninstall?email=${email}`
+  );
+}
+
+export {
+  useAutoSave,
+  useAutoInitialLoad,
+  useSyncing,
+  setUninstallEmailAddress,
+};

@@ -60,7 +60,7 @@ function ProfileManager({
   return (
     <section className={styles.main}>
       <header>
-        <h1>Pages</h1>
+        <h1>Blocked pages</h1>
         <button
           className={styles["new-button"]}
           onClick={() => setModalMode({ mode: "new" })}

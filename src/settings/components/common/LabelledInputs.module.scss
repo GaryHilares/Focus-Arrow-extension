@@ -24,6 +24,29 @@
   }
 }
 
+.email-input {
+  outline: none;
+  border: 1px solid black;
+  padding: 3px;
+  border-radius: 5px;
+  &:focus {
+    transition: all 0.25s;
+    outline: 1px solid blue;
+  }
+}
+
+.url-input {
+  outline: none;
+  border: 1px solid black;
+  padding: 3px;
+  border-radius: 5px;
+  width: 300px;
+  &:focus {
+    transition: all 0.25s;
+    outline: 1px solid blue;
+  }
+}
+
 .select-input {
   background-color: transparent;
   outline: none;

@@ -16,10 +16,11 @@ export class StorageManager {
     }
     browser.storage.local.set({
       patterns: [],
-      theme: "default",
+      theme: "https://liberty-arrow-api.vercel.app/block-screens/default",
       protectionType: "none",
       protectionDetails: null,
-      v: 0,
+      email: null,
+      v: 1,
     });
   }
 

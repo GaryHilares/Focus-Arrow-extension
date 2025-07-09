@@ -44,6 +44,29 @@ function LabelledEmailInput({
         id={inputId}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        className={styles["email-input"]}
+      />
+    </div>
+  );
+}
+
+interface LabelledUrlInputProps {
+  value: string;
+  onChange: (newValue: string) => void;
+  label: string;
+}
+
+function LabelledUrlInput({ value, onChange, label }: LabelledUrlInputProps) {
+  const inputId = useId();
+  return (
+    <div className={styles.wrapper}>
+      <label htmlFor={inputId}>{label}</label>
+      <input
+        type="url"
+        id={inputId}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={styles["url-input"]}
       />
     </div>
   );
@@ -130,6 +153,34 @@ function LabelledButtonInput({
   );
 }
 
+interface LabelledCheckBoxInputProps {
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  label: string;
+}
+
+function LabelledCheckBoxInput({
+  checked,
+  onChange,
+  label,
+}: LabelledCheckBoxInputProps) {
+  const inputId = useId();
+  return (
+    <div className={styles.wrapper}>
+      <label htmlFor={inputId}>{label}</label>
+      <input
+        className={styles["button-input"]}
+        type="checkbox"
+        id={inputId}
+        checked={checked}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          onChange(event.target.checked);
+        }}
+      />
+    </div>
+  );
+}
+
 function ButtonBox() {
   return (
     <div className={styles["button-box"]}>
@@ -150,8 +201,10 @@ function ButtonBox() {
 export {
   LabelledTextInput,
   LabelledEmailInput,
+  LabelledUrlInput,
   LabelledSelectInput,
   LabelledTimeInput,
   LabelledButtonInput,
+  LabelledCheckBoxInput,
   ButtonBox,
 };
