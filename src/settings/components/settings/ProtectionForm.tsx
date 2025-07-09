@@ -39,7 +39,7 @@ interface ProtectionType {
    * Produces an element to be displayed in the form
    * @returns An element to be displayed in the form.
    */
-  getDisplay: () => JSX.Element | null;
+  getDisplay: () => JSX.Element;
 
   /**
    * Represents whether this protection type uses a modal to atomically submit
@@ -67,163 +67,157 @@ interface ProtectionType {
   applyWithoutSubmit?: () => void;
 }
 
-class ProtectionTypeContext {
-  private protectionTypes: { [key: string]: ProtectionType };
-  private currentOption: string;
+function getOptions(
+  protectionTypes: Array<ProtectionType>
+): { text: string; value: string }[] {
+  return protectionTypes.map((value) => ({
+    text: value.getDescriptiveString(),
+    value: value.getIdString(),
+  }));
+}
 
-  constructor(defaultOption: string, newProtectionTypes: ProtectionType[]) {
-    this.currentOption = defaultOption;
-    this.protectionTypes = {};
-    for (const element of newProtectionTypes) {
-      this.protectionTypes[element.getIdString()] = element;
-    }
-  }
-
-  requestDescriptiveString(): string {
-    return this.protectionTypes[this.currentOption].getDescriptiveString();
-  }
-
-  requestIdString(): string {
-    return this.protectionTypes[this.currentOption].getIdString();
-  }
-
-  requestForm(): JSX.Element {
-    return this.protectionTypes[this.currentOption].getDisplay();
-  }
-
-  requestModal(): JSX.Element {
-    return this.protectionTypes[this.currentOption].getModal();
-  }
-
-  getOptions(): { text: string; value: string }[] {
-    return Object.keys(this.protectionTypes).map((key) => ({
-      text: this.protectionTypes[key].getDescriptiveString(),
-      value: this.protectionTypes[key].getIdString(),
-    }));
-  }
-
-  getSelectedOptionId(): string {
-    return this.currentOption;
-  }
-
-  copyAndSetOptionId(protectionTypeId: string): ProtectionTypeContext {
-    let newProtectionTypeList = new ProtectionTypeContext(
-      this.currentOption,
-      Object.values(this.protectionTypes)
-    );
-    newProtectionTypeList.currentOption = protectionTypeId;
-    return newProtectionTypeList;
-  }
-
-  getSelectComponent(
-    onChange: (newValue: ProtectionTypeContext) => void,
-    setShowModal: (showModal: boolean) => void
-  ): JSX.Element {
-    return (
-      <LabelledSelectInput
-        value={this.getSelectedOptionId()}
-        onChange={(id) => {
-          if (this.protectionTypes[id].needsModal()) {
-            setShowModal(true);
-          } else {
-            this.protectionTypes[id].applyWithoutSubmit();
-          }
-          onChange(this.copyAndSetOptionId(id));
-        }}
-        label="Protection type"
-        options={this.getOptions()}
-      />
-    );
-  }
+function ProtectionTypeSelect({
+  protectionTypeId,
+  protectionTypes,
+  setNewProtectionType,
+}: {
+  protectionTypeId: string;
+  protectionTypes: Array<ProtectionType>;
+  setNewProtectionType: (id: string) => void;
+}): JSX.Element {
+  return (
+    <LabelledSelectInput
+      value={protectionTypeId}
+      onChange={setNewProtectionType}
+      label="Protection type"
+      options={getOptions(protectionTypes)}
+    />
+  );
 }
 
 class NoProtectionType implements ProtectionType {
-  constructor(private onSubmit: (protectionId: string) => void) {}
-  getDescriptiveString(): string {
+  public constructor(
+    private commitTypeAndDetails: (
+      protectionId: string,
+      details: ProtectionDetails
+    ) => void
+  ) {}
+
+  public getDescriptiveString(): string {
     return "None";
   }
-  getIdString(): string {
+
+  public getIdString(): string {
     return "none";
   }
-  getDisplay(): JSX.Element | null {
+
+  public getDisplay(): JSX.Element {
     return null;
   }
-  needsModal(): boolean {
+
+  public needsModal(): boolean {
     return false;
   }
-  applyWithoutSubmit(): void {
-    this.onSubmit(this.getIdString());
+
+  public applyWithoutSubmit(): void {
+    this.commitTypeAndDetails(this.getIdString(), null);
   }
 }
 
 class PasswordType implements ProtectionType {
-  constructor(
-    private openModal: () => void,
-    private onSubmit: (protectionId: string, password: string) => void,
-    private onReset: () => void
+  public constructor(
+    private commitTypeAndDetails: (
+      typeId: string,
+      details: ProtectionDetails
+    ) => void,
+    private rollbackTypeAndDetails: () => void,
+    private openModalWithId: (id: string) => void
   ) {}
-  getDescriptiveString(): string {
+
+  public getDescriptiveString(): string {
     return "Password";
   }
-  getIdString(): string {
+
+  public getIdString(): string {
     return "password";
   }
-  getDisplay(): JSX.Element | null {
+
+  public getDisplay(): JSX.Element {
     return (
       <LabelledButtonInput
-        onClick={() => this.openModal()}
+        onClick={() => this.openModalWithId(this.getIdString())}
         label="Change password"
         text="Change"
       />
     );
   }
-  needsModal(): boolean {
+
+  public needsModal(): boolean {
     return true;
   }
-  getModal(): JSX.Element | null {
+
+  public getModal(): JSX.Element {
     return (
       <PasswordModal
         onSubmit={(password: string) =>
-          this.onSubmit(this.getIdString(), password)
+          this.commitTypeAndDetails(this.getIdString(), { password: password })
         }
-        onReset={() => this.onReset()}
+        onReset={() => this.rollbackTypeAndDetails()}
       />
     );
   }
 }
 
 class EmailTokenType implements ProtectionType {
-  constructor(
-    private openModal: () => void,
-    private onSubmit: (protectionId: string, email: string) => void,
-    private onReset: () => void
+  public constructor(
+    private commitTypeAndDetails: (
+      typeId: string,
+      details: ProtectionDetails
+    ) => void,
+    private rollbackTypeAndDetails: () => void,
+    private openModalWithId: (id: string) => void
   ) {}
-  getDescriptiveString(): string {
+
+  public getDescriptiveString(): string {
     return "Email Token";
   }
-  getIdString(): string {
+
+  public getIdString(): string {
     return "email-token";
   }
-  getDisplay(): JSX.Element | null {
+
+  public getDisplay(): JSX.Element {
     return (
       <LabelledButtonInput
-        onClick={() => this.openModal()}
+        onClick={() => this.openModalWithId(this.getIdString())}
         label="Change email"
         text="Change"
       />
     );
   }
-  needsModal() {
+
+  public needsModal() {
     return true;
   }
-  getModal(): JSX.Element | null {
+
+  public getModal(): JSX.Element {
     return (
       <EmailTokenModal
-        onSubmit={(email: string) => this.onSubmit(this.getIdString(), email)}
-        onReset={() => this.onReset()}
+        onSubmit={(email: string) =>
+          this.commitTypeAndDetails(this.getIdString(), { email: email })
+        }
+        onReset={() => this.rollbackTypeAndDetails()}
       />
     );
   }
+}
+
+function toIdDict(arr: Array<ProtectionType>): Record<string, ProtectionType> {
+  const ret: Record<string, ProtectionType> = {};
+  for (const el of arr) {
+    ret[el.getIdString()] = el;
+  }
+  return ret;
 }
 
 function ProtectionForm() {
@@ -231,62 +225,47 @@ function ProtectionForm() {
     useSyncing<string>("protectionType");
   const [protectionDetailsLoaded, protectionDetails, setProtectionDetails] =
     useSyncing<ProtectionDetails>("protectionDetails");
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [protectionTypeContext, setProtectionTypeContext] =
-    useState<ProtectionTypeContext | null>(null);
-  React.useEffect(() => {
-    if (
-      protectionTypeLoaded &&
-      protectionDetailsLoaded &&
-      !protectionTypeContext
-    ) {
-      setProtectionTypeContext(
-        new ProtectionTypeContext(protectionType, [
-          new NoProtectionType((protectionId) => {
-            setProtectionType(protectionId);
-            setProtectionDetails(null);
-          }),
-          new PasswordType(
-            () => {
-              setShowModal(true);
-            },
-            (protectionId: string, password: string) => {
-              setProtectionType(protectionId);
-              setProtectionDetails({ password: password });
-              setShowModal(false);
-            },
-            () => {
-              setShowModal(false);
-            }
-          ),
-          new EmailTokenType(
-            () => {
-              setShowModal(true);
-            },
-            (protectionId: string, email: string) => {
-              setProtectionType(protectionId);
-              setProtectionDetails({ email: email });
-              setShowModal(false);
-            },
-            () => {
-              setShowModal(false);
-            }
-          ),
-        ])
-      );
+  const [modalShown, setModalShown] = useState<string | null>(null);
+  function commitTypeAndDetails(typeId: string, details: ProtectionDetails) {
+    setProtectionType(typeId);
+    setProtectionDetails(details);
+    setModalShown(null);
+  }
+  function rollbackTypeAndDetails() {
+    setModalShown(null);
+  }
+  const protectionTypes = [
+    new NoProtectionType(commitTypeAndDetails),
+    new PasswordType(
+      commitTypeAndDetails,
+      rollbackTypeAndDetails,
+      setModalShown
+    ),
+    new EmailTokenType(
+      commitTypeAndDetails,
+      rollbackTypeAndDetails,
+      setModalShown
+    ),
+  ];
+  const protectionTypesIdDict = toIdDict(protectionTypes);
+  function setNewProtectionType(id: string) {
+    if (protectionTypesIdDict[id].needsModal()) {
+      setModalShown(id);
+    } else {
+      protectionTypesIdDict[id].applyWithoutSubmit();
     }
-  }, [protectionTypeLoaded, protectionDetailsLoaded]);
+  }
   return (
     protectionTypeLoaded &&
-    protectionDetailsLoaded &&
-    protectionTypeContext && (
+    protectionDetailsLoaded && (
       <>
-        {showModal && protectionTypeContext.requestModal()}
-        {protectionTypeContext.getSelectComponent(
-          setProtectionTypeContext,
-          setShowModal
-        )}
-        {protectionTypeContext.requestForm()}
+        {modalShown && protectionTypesIdDict[modalShown].getModal()}
+        <ProtectionTypeSelect
+          protectionTypeId={protectionType}
+          protectionTypes={protectionTypes}
+          setNewProtectionType={setNewProtectionType}
+        />
+        {protectionTypesIdDict[protectionType].getDisplay()}
       </>
     )
   );
