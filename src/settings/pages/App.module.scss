@@ -1,17 +1,15 @@
 $background-color: white;
 $primary-color: rgb(84, 90, 167);
-$header-height: 10vh;
+$spacer: 4px;
 
 .header {
   background-color: $background-color;
   border-bottom: 3px solid $primary-color;
   display: block;
-  height: $header-height;
   div {
+    margin: ($spacer * 3) 0;
     align-items: center;
     display: inline-flex;
-    float: left;
-    height: $header-height;
     img {
       margin: 0 20px;
     }
@@ -24,7 +22,7 @@ $header-height: 10vh;
     align-items: center;
     display: inline-flex;
     float: right;
-    height: $header-height;
+    margin: ($spacer * 5) 0;
     ul {
       li {
         display: inline-block;
