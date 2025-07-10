@@ -44,7 +44,7 @@ function useSyncing<Type>(
 
 function setUninstallEmailAddress(email: string) {
   browser.runtime.setUninstallURL(
-    `https://focus-arrow-api.vercel.app/uninstall?email=${email}`
+    `https://focusarrow.app/uninstall?email=${email}`
   );
 }
 

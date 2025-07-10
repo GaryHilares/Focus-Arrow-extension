@@ -3,7 +3,7 @@
   "version": "1.4.0",
   "description": "A customizable page blocker perfect for your needs.",
   "permissions": ["storage", "tabs"],
-  "host_permissions": ["https://focus-arrow-api.vercel.app/*"],
+  "host_permissions": ["https://focusarrow.app/*"],
   "background": {
     "scripts": ["background/bundle.js"]
   },

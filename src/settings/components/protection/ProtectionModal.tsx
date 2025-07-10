@@ -18,7 +18,7 @@ function PasswordSpecificForm({ onSuccess }: { onSuccess: () => void }) {
   }
 
   function handleReset() {
-    window.location.replace("https://focus-arrow-api.vercel.app/");
+    window.location.replace("https://focusarrow.app/");
   }
 
   return (
@@ -52,7 +52,7 @@ function EmailSpecificForm({ onSuccess }: { onSuccess: () => void }) {
     console.log("Running effect with:", loaded, protectionDetails);
     if (loaded) {
       fetch(
-        `https://focus-arrow-api.vercel.app/send-token?email=${protectionDetails.email}`
+        `https://focusarrow.app/send-token?email=${protectionDetails.email}`
       )
         .then((response) => response.json())
         .then((json) => setActualToken(json.result));
@@ -67,7 +67,7 @@ function EmailSpecificForm({ onSuccess }: { onSuccess: () => void }) {
   }
 
   function handleReset() {
-    window.location.replace("https://focus-arrow-api.vercel.app/");
+    window.location.replace("https://focusarrow.app/");
   }
 
   return (

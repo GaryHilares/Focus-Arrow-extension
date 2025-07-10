@@ -10,9 +10,7 @@ function initializeStorage() {
 }
 
 function initializeUninstallUrl() {
-  browser.runtime.setUninstallURL(
-    `https://focus-arrow-api.vercel.app/uninstall`
-  );
+  browser.runtime.setUninstallURL(`https://focusarrow.app/uninstall`);
 }
 
 /**
