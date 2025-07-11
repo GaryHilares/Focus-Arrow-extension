@@ -65,8 +65,8 @@ export class BlockEntry {
     const endTime = this.endTime;
     const now = toMinutesSinceDayStart(getCurrentTimeInHHMM());
     const isInTimeRange =
-      (startTime < now && endTime > now) ||
-      (startTime > endTime && (startTime < now || endTime > now));
+      (startTime <= now && endTime >= now) ||
+      (startTime >= endTime && (startTime <= now || endTime >= now));
     if (
       pattern.startsWith("/") &&
       pattern.endsWith("/") &&
