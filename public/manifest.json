@@ -1,6 +1,6 @@
 {
   "name": "Focus Arrow",
-  "version": "1.4.0",
+  "version": "1.0.0",
   "description": "A customizable page blocker perfect for your needs.",
   "permissions": ["storage", "tabs"],
   "host_permissions": ["https://focusarrow.app/*"],
@@ -25,7 +25,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": ""
+      "id": "dev.garyhilares@gmail.com"
     }
   },
   "manifest_version": 3
