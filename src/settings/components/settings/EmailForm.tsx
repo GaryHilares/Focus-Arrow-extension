@@ -3,6 +3,7 @@ import { setUninstallEmailAddress, useSyncing } from "../../hooks/useSyncing";
 import { useState } from "react";
 import {
   ButtonBox,
+  LabelledButtonInput,
   LabelledCheckBoxInput,
   LabelledEmailInput,
 } from "../common/LabelledInputs";
@@ -16,14 +17,40 @@ function EmailModal({
   closeModal: () => void;
 }) {
   const [email, setEmail] = useState<string>("");
-  function handleSubmit(e: React.FormEvent<HTMLElement>) {
+  const [message, setMessage] = useState<string | null>(null);
+  async function handleSubmit(e: React.FormEvent<HTMLElement>) {
     e.preventDefault();
-    onSubmit(email);
+    const response = await fetch(
+      `https://focusarrow.app/check-email?email=${email}`
+    );
+    if (!response.ok) {
+      setMessage("Error while trying to check if email was verified.");
+    }
+    const json = await response.json();
+    if (json.confirmed) {
+      onSubmit(email);
+    } else {
+      setMessage("Error: Email has to be verified.");
+    }
+  }
+  async function sendVerificationEmail() {
+    const response = await fetch(
+      `https://focusarrow.app/send-verification?email=${email}`
+    );
+    if (!response.ok) {
+      setMessage("Error while trying to verify email.");
+    }
   }
   return (
     <Modal>
       <form onSubmit={handleSubmit} onReset={closeModal}>
         <LabelledEmailInput value={email} onChange={setEmail} label="Email" />
+        <LabelledButtonInput
+          text="Send"
+          onClick={sendVerificationEmail}
+          label="Send verification email"
+        />
+        {message && <span>{message}</span>}
         <ButtonBox />
       </form>
     </Modal>
