@@ -1,6 +1,5 @@
 import { BlockManager, InStoragePattern } from "./BlockManager";
-
-declare var browser: any;
+import * as browser from "webextension-polyfill";
 
 /**
  * Class that manages the storage of the extension.
@@ -41,7 +40,7 @@ export class StorageManager {
    * Migrates storage information to a new version.
    */
   public static migrateToNewVersion(): void {
-    browser.storage.local.get(null, (result: { [key: string]: any }) => {
+    browser.storage.local.get(null).then((result: { [key: string]: any }) => {
       const sites = result.blockedPages.sites.map(
         (site: any, index: number) => ({
           name: `Entry ${index}`,

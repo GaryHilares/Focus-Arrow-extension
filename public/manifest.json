@@ -5,7 +5,8 @@
   "permissions": ["storage", "tabs"],
   "host_permissions": ["https://focusarrow.app/*"],
   "background": {
-    "scripts": ["background/bundle.js"]
+    "service_worker": "background/bundle.js",
+    "type": "module"
   },
   "action": {
     "default_title": "Focus Arrow's settings",

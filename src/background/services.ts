@@ -1,6 +1,5 @@
 import { StorageManager } from "./StorageManager";
-
-declare var browser: any;
+import * as browser from "webextension-polyfill";
 
 /**
  * Initializes the storage of the browser.

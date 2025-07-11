@@ -1,6 +1,5 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
-
-declare var browser: any;
+import * as browser from "webextension-polyfill";
 
 function useAutoSave<Type>(query: string, state: Type): void {
   const [firstLoad, setFirstLoad] = useState<boolean>(true);
@@ -20,16 +19,18 @@ function useAutoInitialLoad<Type>(
   const [loaded, setLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    browser.storage.local.get(query, (queryResult: { [key: string]: Type }) => {
-      if (queryResult[query] !== undefined) {
-        setState(queryResult[query]);
-      } else {
-        console.error(
-          `Could not retrieve "${query}" from browser.storage.local.`
-        );
-      }
-      setLoaded(true);
-    });
+    browser.storage.local
+      .get(query)
+      .then((queryResult: { [key: string]: Type }) => {
+        if (queryResult[query] !== undefined) {
+          setState(queryResult[query]);
+        } else {
+          console.error(
+            `Could not retrieve "${query}" from browser.storage.local.`
+          );
+        }
+        setLoaded(true);
+      });
   }, []);
   return [loaded, state, setState];
 }
