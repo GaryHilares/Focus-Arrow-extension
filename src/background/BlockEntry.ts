@@ -23,7 +23,7 @@ function toMinutesSinceDayStart(str: string): number {
  * Produces current time of the day in the format "HH:MM".
  * @returns Current time of the day in the format "HH:MM".
  */
-function getCurrentTimeInHHMM() {
+function getCurrentTimeInHHMM(): string {
   const now = new Date();
   const hours = now.getHours().toString().padStart(2, "0");
   const minutes = now.getMinutes().toString().padStart(2, "0");
@@ -33,7 +33,7 @@ function getCurrentTimeInHHMM() {
 /**
  * Represents a entry of pages that should be blocked.
  */
-export class BlockEntry {
+class BlockEntry {
   startTime: number;
   endTime: number;
 
@@ -48,7 +48,8 @@ export class BlockEntry {
     private name: string,
     private urlPattern: string,
     startTime: string,
-    endTime: string
+    endTime: string,
+    private generateDate: () => string = getCurrentTimeInHHMM
   ) {
     this.startTime = toMinutesSinceDayStart(startTime);
     this.endTime = toMinutesSinceDayStart(endTime);
@@ -63,10 +64,10 @@ export class BlockEntry {
     const pattern = this.urlPattern;
     const startTime = this.startTime;
     const endTime = this.endTime;
-    const now = toMinutesSinceDayStart(getCurrentTimeInHHMM());
+    const now = toMinutesSinceDayStart(this.generateDate());
     const isInTimeRange =
       (startTime <= now && endTime >= now) ||
-      (startTime >= endTime && (startTime <= now || endTime >= now));
+      (startTime > endTime && (startTime <= now || endTime >= now));
     if (
       pattern.startsWith("/") &&
       pattern.endsWith("/") &&
@@ -80,3 +81,5 @@ export class BlockEntry {
     return isInTimeRange && url.toLowerCase().includes(pattern.toLowerCase());
   }
 }
+
+export { BlockEntry };
