@@ -9,8 +9,9 @@ export class StorageManager {
    * Initializes the storage of the extension.
    */
   public static async initializeStorage(): Promise<void> {
-    if (await StorageManager.isMigrating()) {
-      StorageManager.migrateToNewVersion();
+    const version = await StorageManager.getVersion();
+    if (version !== null && version < 1) {
+      StorageManager.migrateFromVersion(version);
       return;
     }
     browser.storage.local.set({
@@ -27,19 +28,33 @@ export class StorageManager {
    * Checks if the storage needs to be migrated to a new version.
    * @returns Will resolve to true if migration is required, false otherwise.
    */
-  public static async isMigrating(): Promise<boolean> {
+  public static async getVersion(): Promise<number | null> {
     return browser.storage.local
       .get(null)
-      .then(
-        (result: { v?: number; [key: string]: any }) =>
-          Object.keys(result).length > 0 && !("v" in result)
-      );
+      .then((result: { v?: number; [key: string]: any }) => {
+        if (Object.keys(result).length == 0) {
+          return null;
+        }
+        if (!("v" in result)) {
+          return -1;
+        } else {
+          return result.v;
+        }
+      });
   }
 
   /**
    * Migrates storage information to a new version.
    */
-  public static migrateToNewVersion(): void {
+  public static migrateFromVersion(version: number): void {
+    if (version == -1) {
+      StorageManager.migrateFromVersionPre0();
+    } else if (version == 0) {
+      StorageManager.migrateFromVersion0();
+    }
+  }
+
+  public static migrateFromVersionPre0(): void {
     browser.storage.local.get(null).then((result: { [key: string]: any }) => {
       const sites = result.blockedPages.sites.map(
         (site: any, index: number) => ({
@@ -55,18 +70,32 @@ export class StorageManager {
       browser.storage.local
         .set({
           patterns: sites,
-          theme: result.theme,
+          theme: "https://focusarrow.app/block-screens/default",
           protectionType: isProtectionTypeValid ? protectionType : "none",
           protectionDetails: isProtectionTypeValid
             ? result.passwordData.details
             : null,
-          v: 0,
+          v: 1,
           blockedPages: null,
           passwordData: null,
+          email: null,
         })
         .then(() =>
           browser.storage.local.remove(["blockedPages", "passwordData"])
         );
+    });
+  }
+
+  public static migrateFromVersion0(): void {
+    browser.storage.local.get(null).then((result: { [key: string]: any }) => {
+      browser.storage.local.set({
+        patterns: result.patterns,
+        theme: "https://focusarrow.app/block-screens/default",
+        protectionType: result.protectionType,
+        protectionDetails: result.protectionDetails,
+        v: 1,
+        email: null,
+      });
     });
   }
 

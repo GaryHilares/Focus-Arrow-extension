@@ -1,6 +1,6 @@
 {
   "name": "Focus Arrow",
-  "version": "1.0.0",
+  "version": "1.5.0",
   "description": "A customizable page blocker perfect for your needs.",
   "permissions": ["storage", "tabs"],
   "host_permissions": ["https://focusarrow.app/*"],
